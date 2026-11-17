@@ -134,14 +134,14 @@
       </div>
       <div class="card" id="flog">
         <div class="fg"><label class="lbl">Student Name (अपना नाम)</label><input id="lname" class="inp" maxlength="20" placeholder="e.g., Rahul" /></div>
-        <div class="fg"><label class="lbl">Class (कक्षा चुनें)</label><select id="lcls" class="sel"></select></div>
+        <div class="fg"><label class="lbl">Class (कक्षा चुनें)</label><select id="lcls" class="sel"><option>Nursery</option><option>LKG</option><option>UKG</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option></select></div>
         <div class="fg"><label class="lbl">Your 4-Digit PIN (पिन)</label><input type="password" inputmode="numeric" id="lpin" class="inp" maxlength="8" placeholder="••••" onkeydown="if(event.key==='Enter') doLogin()" /></div>
         <div id="lerr" style="color:#DC2626; font-size:13px; font-weight:700; min-height:18px; text-align:center; margin-bottom:8px;"></div>
         <button class="btn btn-p" id="lbtn" onclick="doLogin()">Login & Play 🎮</button>
       </div>
       <div class="card" id="fsig" style="display:none;">
         <div class="fg"><label class="lbl">Student Name (अपना नाम लिखें)</label><input id="sname" class="inp" maxlength="20" placeholder="e.g., Rahul Sharma" /></div>
-        <div class="fg"><label class="lbl">Class (अपनी कक्षा चुनें)</label><select id="scls" class="sel"></select></div>
+        <div class="fg"><label class="lbl">Class (अपनी कक्षा चुनें)</label><select id="scls" class="sel"><option>Nursery</option><option>LKG</option><option>UKG</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option></select></div>
         <div class="fg"><label class="lbl">Create Secret PIN (4 अंकों का PIN बनाएं)</label><input type="password" inputmode="numeric" id="spin" class="inp" maxlength="8" placeholder="e.g., 1234" /></div>
         <div class="fg"><label class="lbl">Pick Avatar</label><div class="avpick" id="sav"></div></div>
         <div id="serr" style="color:#DC2626; font-size:13px; font-weight:700; min-height:18px; text-align:center; margin-bottom:8px;"></div>
@@ -294,9 +294,8 @@
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzus1WHUyIMmKTK9ZnJ1O6Vv1_5sXF0SiPteGyLK9xNvqVcfOHjFph4Dx_xIwBLAymIvg/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxMktOnjRXXVvhwie3FG3dY2AnkK8VXom4uQzIJOvNb4_s8jn7lKnc1fMsvIgasUBFv/exec';
     const K_Q = 'ak_q_v1', K_S = 'ak_s_v1';
-    const CLS = ['Nursery','LKG','UKG','Class 1','Class 2','Class 3','Class 4','Class 5','Class 6','Class 7','Class 8','Class 9','Class 10'];
     const SUB = [{k:'math',n:'Math',e:'➗'},{k:'english',n:'English',e:'🔤'},{k:'hindi',n:'Hindi',e:'🕉️'},{k:'evs',n:'EVS',e:'🌳'},{k:'gk',n:'GK',e:'🌍'},{k:'puzzle',n:'Puzzle',e:'🧩'}];
     const AVS = ['🦊','🦄','🦁','🐼','🐯','🐰','🐸','🦉'];
     const DEFQ = {math:[{q:'8 + 7 = ?',opts:['14','15','16','13'],ans:1}],english:[{q:'Opposite of Happy:',opts:['Joyful','Sad','Bright','Fast'],ans:1}],hindi:[{q:'"सूरज" का पर्यायवाची?',opts:['चाँद','रवि','तारा','बादल'],ans:1}],evs:[{q:'Plant makes food in:',opts:['Root','Leaf','Stem','Flower'],ans:1}],gk:[{q:'Capital of India:',opts:['Mumbai','New Delhi','Jaipur','Kolkata'],ans:1}],puzzle:[{q:'2, 4, 6, 8, ___',opts:['9','10','12','11'],ans:1}]};
@@ -518,17 +517,4 @@
     }
 
     const cv=$('confetti'), cx=cv.getContext('2d'); let pts=[], run=false;
-    const rsz=()=>{cv.width=innerWidth;cv.height=innerHeight;}; addEventListener('resize',rsz); rsz();
-    function confetti(){ const c=['#7C3AED','#38BDF8','#10B981','#F59E0B','#EC4899']; for(let i=0;i<60;i++)pts.push({x:innerWidth/2+(Math.random()-.5)*120,y:innerHeight*.45,vx:(Math.random()-.5)*12,vy:(Math.random()-1.2)*13,s:5+Math.random()*7,c:c[i%5],l:1}); if(!run){run=true;anim();} }
-    function anim(){ cx.clearRect(0,0,cv.width,cv.height); pts=pts.filter(p=>p.l>0); pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.l-=.016; cx.globalAlpha=Math.max(0,p.l); cx.fillStyle=p.c; cx.fillRect(p.x,p.y,p.s,p.s*.7);}); if(pts.length)requestAnimationFrame(anim); else run=false; }
-
-    const cOpts=CLS.map(c=>`<option value="${c}">${c}</option>`).join('');
-    $('lcls').innerHTML=cOpts; $('scls').innerHTML=cOpts;
-    (function rSav(){ $('sav').innerHTML=AVS.map(a=>`<button type="button" class="avbtn ${a===sav?'on':''}" onclick="sav='${a}';document.querySelectorAll('#sav .avbtn').forEach(b=>b.classList.toggle('on',b.textContent==='${a}'))">${a}</button>`).join(''); })();
-    renderGrids(); initMem(); nextMM();
-    if(st.id){ showApp(); syncUI(); } else showAuth();
-    syncSheet(false);
-    if(new URLSearchParams(location.search).get('teacher')==='1') openPMod();
-  </script>
-</body>
-</html>
+    const rsz=()=>{cv.width=innerWidth;cv.height=innerHeight;}; addEventListener('resize',rsz); rsz
