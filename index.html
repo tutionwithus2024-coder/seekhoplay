@@ -3,112 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>AK Learning Hub 🌟 Kids Learning App</title>
+  <title>AK Learning Hub 🌟 Smart Learning App</title>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --p: linear-gradient(135deg,#7C3AED,#A855F7); --b: linear-gradient(135deg,#2563EB,#38BDF8);
-      --t: linear-gradient(135deg,#0D9488,#2DD4BF); --o: linear-gradient(135deg,#EA580C,#FB923C);
-      --pk: linear-gradient(135deg,#DB2777,#F472B6); --i: linear-gradient(135deg,#4F46E5,#818CF8);
-      --sh: 0 10px 24px -5px rgba(30,41,59,.09);
-    }
-    * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
-    input,select { user-select:text; }
-    body { margin:0; font-family:'Baloo 2','Poppins',sans-serif; background:radial-gradient(circle at top left,#E0E7FF,#F8FAFF 50%,#FCE7F3); color:#1E293B; min-height:100vh; display:flex; justify-content:center; }
-    .app { width:100%; max-width:440px; min-height:100vh; background:#F8FAFF; display:flex; flex-direction:column; position:relative; box-shadow:0 0 40px rgba(79,70,229,.12); }
-    #confetti { position:fixed; inset:0; pointer-events:none; z-index:999; }
-    .top { padding:12px 14px 8px; display:flex; align-items:center; justify-content:space-between; gap:6px; background:rgba(248,250,255,.95); backdrop-filter:blur(8px); position:sticky; top:0; z-index:50; }
-    .brand { display:flex; align-items:center; gap:8px; }
-    .logo { width:38px; height:38px; border-radius:13px; background:var(--p); display:grid; place-items:center; font-size:19px; cursor:pointer; box-shadow:0 5px 12px rgba(124,58,237,.3); }
-    .btitle { font-size:17px; font-weight:800; line-height:1.05; background:var(--p); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .sdot { font-size:10.5px; font-weight:700; color:#64748B; display:block; }
-    .pills { display:flex; gap:6px; align-items:center; }
-    .pill { display:flex; align-items:center; gap:4px; background:#fff; padding:5px 10px; border-radius:999px; font-weight:800; font-size:14px; box-shadow:var(--sh); border:2px solid #F1F5F9; transition:.2s; }
-    .pill.bump { transform:scale(1.18); border-color:#FBBF24; }
-    .lvl { background:linear-gradient(135deg,#FEF3C7,#FDE68A); color:#92400E; border-color:#FCD34D; font-size:11px; }
-    .main { flex:1; padding:8px 18px 100px; }
-    .scr,.auth { display:none; animation:up .3s ease; }
-    .scr.on,.auth.on { display:block; }
-    .auth { padding:10px 18px 36px; }
-    @keyframes up { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
-    .hero { background:linear-gradient(135deg,#4F46E5,#8B5CF6 55%,#EC4899); border-radius:24px; padding:18px; color:#fff; text-align:center; box-shadow:0 12px 24px -6px rgba(124,58,237,.3); margin-bottom:14px; }
-    .tabs { display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#E2E8F0; padding:5px; border-radius:18px; margin-bottom:14px; }
-    .tbtn { border:none; border-radius:14px; padding:10px; font:800 15px inherit; background:transparent; color:#64748B; cursor:pointer; }
-    .tbtn.on { background:#fff; color:#6D28D9; box-shadow:0 4px 10px rgba(0,0,0,.06); }
-    .card { background:#fff; border-radius:22px; padding:16px; box-shadow:var(--sh); border:2px solid #EEF2FF; margin-bottom:14px; }
-    .mascot { background:linear-gradient(135deg,#6366F1,#8B5CF6 55%,#EC4899); border-radius:24px; padding:16px 18px; color:#fff; display:flex; align-items:center; gap:14px; box-shadow:0 12px 24px -6px rgba(124,58,237,.28); margin-bottom:16px; }
-    .owl { width:64px; height:64px; flex-shrink:0; background:rgba(255,255,255,.22); border-radius:20px; display:grid; place-items:center; font-size:36px; animation:bob 3s infinite ease-in-out; }
-    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
-    .track { height:11px; background:#E2E8F0; border-radius:999px; overflow:hidden; }
-    .fill { height:100%; background:linear-gradient(90deg,#10B981,#34D399); border-radius:999px; transition:width .5s; }
-    .stitle { font-size:19px; font-weight:800; margin:0 0 12px; display:flex; justify-content:space-between; align-items:center; }
-    .sgrid { display:grid; grid-template-columns:1fr 1fr; gap:13px; margin-bottom:18px; }
-    .scard { border:none; border-radius:24px; padding:16px 12px; color:#fff; text-align:center; cursor:pointer; box-shadow:0 10px 20px -6px rgba(15,23,42,.22); font-family:inherit; }
-    .scard:nth-child(1){background:var(--p)} .scard:nth-child(2){background:var(--b)} .scard:nth-child(3){background:var(--o)}
-    .scard:nth-child(4){background:var(--t)} .scard:nth-child(5){background:var(--pk)} .scard:nth-child(6){background:var(--i)}
-    .scard:active { transform:scale(.94); }
-    .btn { border:none; border-radius:20px; padding:13px 18px; font:800 16px inherit; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 5px 0 rgba(0,0,0,.14); }
-    .btn:active:not(:disabled) { transform:translateY(3px) scale(.96); box-shadow:0 2px 0 rgba(0,0,0,.14); }
-    .btn:disabled { opacity:.55; cursor:not-allowed; box-shadow:none; }
-    .btn-p { background:var(--p); color:#fff; width:100%; }
-    .inp,.sel { width:100%; border:2px solid #E2E8F0; border-radius:16px; padding:10px 13px; font:700 15px inherit; outline:none; background:#fff; color:#1E293B; }
-    .lbl { display:block; font-size:12.5px; font-weight:800; color:#64748B; margin-bottom:4px; }
-    .fg { margin-bottom:11px; }
-    .avpick { display:flex; justify-content:center; gap:7px; flex-wrap:wrap; margin-top:8px; }
-    .avbtn { width:40px; height:40px; border-radius:13px; border:2px solid transparent; background:#F1F5F9; font-size:21px; cursor:pointer; }
-    .avbtn.on { border-color:#7C3AED; background:#EDE9FE; transform:scale(1.1); }
-    .avbtn.dk { background:rgba(255,255,255,.24); }
-    .avbtn.dk.on { border-color:#fff; background:rgba(255,255,255,.45); }
-    .qtop { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
-    .xbtn { width:42px; height:42px; border-radius:14px; border:none; background:#fff; box-shadow:var(--sh); font:800 18px inherit; cursor:pointer; }
-    .tbadge { background:#FEF3C7; color:#B45309; padding:7px 14px; border-radius:999px; font-weight:800; border:2px solid #FDE68A; }
-    .tbadge.urg { background:#FEE2E2; color:#DC2626; border-color:#FCA5A5; }
-    .opt { width:100%; min-height:56px; padding:12px 15px; border-radius:20px; border:3px solid #E2E8F0; background:#fff; font:700 17px inherit; color:#1E293B; display:flex; align-items:center; gap:12px; text-align:left; cursor:pointer; box-shadow:0 4px 0 #E2E8F0; margin-bottom:10px; }
-    .oltr { width:34px; height:34px; border-radius:11px; background:#F1F5F9; display:grid; place-items:center; font-weight:800; flex-shrink:0; }
-    .opt.ok { background:#ECFDF5; border-color:#10B981; color:#065F46; box-shadow:0 0 20px rgba(16,185,129,.4); }
-    .opt.ok .oltr { background:#10B981; color:#fff; }
-    .opt.no { background:#FEF2F2; border-color:#EF4444; color:#991B1B; animation:shk .4s; }
-    .opt.no .oltr { background:#EF4444; color:#fff; }
-    @keyframes shk { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
-    .fb { margin-top:12px; padding:13px; border-radius:18px; font-weight:800; text-align:center; display:none; }
-    .fb.ok { display:block; background:#D1FAE5; color:#065F46; }
-    .fb.no { display:block; background:#FFEDD5; color:#9A3412; }
-    .flt { position:fixed; top:70px; right:24px; background:linear-gradient(135deg,#F59E0B,#FCD34D); color:#78350F; font-weight:800; padding:6px 14px; border-radius:999px; z-index:100; animation:fsc 1.1s forwards; }
-    @keyframes fsc { 0%{opacity:0;transform:translateY(10px)} 25%{opacity:1} 100%{opacity:0;transform:translateY(-35px)} }
-    .trophy { font-size:52px; display:inline-block; animation:bob 1.8s infinite ease-in-out; }
-    .tcard { background:#fff; border-radius:22px; padding:16px; box-shadow:var(--sh); border:2px solid #EEF2FF; margin-bottom:12px; }
-    .tcard.done { background:linear-gradient(135deg,#ECFDF5,#fff); border-color:#6EE7B7; }
-    .tstats { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin:10px 0 12px; text-align:center; }
-    .tstat { background:#F8FAFF; border-radius:12px; padding:6px 4px; font-size:11px; font-weight:700; color:#64748B; }
-    .tstat b { display:block; font-size:15px; color:#1E293B; }
-    .mgrid { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; margin-top:12px; }
-    .mtile { aspect-ratio:1; border-radius:16px; border:none; background:var(--b); color:#fff; font-size:26px; cursor:pointer; box-shadow:0 4px 0 #1D4ED8; }
-    .mtile.fl,.mtile.mt { background:#fff; border:3px solid #38BDF8; box-shadow:var(--sh); }
-    .mtile.mt { border-color:#10B981; background:#ECFDF5; }
-    .pod { display:flex; align-items:flex-end; gap:10px; margin:14px 0 20px; }
-    .pitem { flex:1; text-align:center; display:flex; flex-direction:column; align-items:center; }
-    .pav { width:54px; height:54px; border-radius:50%; background:#fff; display:grid; place-items:center; font-size:28px; box-shadow:var(--sh); border:3px solid #fff; margin-bottom:4px; }
-    .pitem.f .pav { width:64px; height:64px; font-size:34px; border-color:#FBBF24; }
-    .pblk { width:100%; border-radius:18px 18px 10px 10px; color:#fff; font-weight:800; font-size:22px; display:grid; place-items:center; }
-    .pitem.f .pblk{height:105px;background:linear-gradient(180deg,#F59E0B,#D97706)}
-    .pitem.s .pblk{height:80px;background:linear-gradient(180deg,#94A3B8,#64748B)}
-    .pitem.t .pblk{height:64px;background:linear-gradient(180deg,#EA580C,#C2410C)}
-    .rrow { background:#fff; border-radius:18px; padding:11px 14px; display:flex; align-items:center; gap:10px; box-shadow:var(--sh); margin-bottom:9px; border:2px solid transparent; }
-    .rrow.me { background:linear-gradient(135deg,#EEF2FF,#FCE7F3); border-color:#8B5CF6; }
-    .bgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:18px; }
-    .btile { background:#fff; border-radius:18px; padding:12px 6px; text-align:center; box-shadow:var(--sh); border:2px solid #F1F5F9; }
-    .btile.lk { opacity:.45; filter:grayscale(.8); }
-    .btile.un { border-color:#FCD34D; background:linear-gradient(180deg,#fff,#FFFBEB); }
-    .ogrid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-    .aq { background:#F8FAFF; border:2px solid #E2E8F0; border-radius:15px; padding:11px; margin-bottom:9px; display:flex; justify-content:space-between; gap:8px; }
-    .del { border:none; background:#FEE2E2; color:#DC2626; border-radius:10px; padding:6px 10px; font-weight:800; cursor:pointer; }
-    .mod { position:fixed; inset:0; background:rgba(15,23,42,.55); backdrop-filter:blur(4px); display:none; place-items:center; z-index:200; padding:20px; }
-    .mod.on { display:grid; }
-    .mbox { width:100%; max-width:340px; background:#fff; border-radius:24px; padding:22px 18px; text-align:center; }
-    .bnav { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:440px; background:rgba(255,255,255,.96); backdrop-filter:blur(10px); border-top:2px solid #EEF2FF; padding:8px 8px 12px; display:flex; justify-content:space-around; z-index:40; border-radius:24px 24px 0 0; box-shadow:0 -8px 25px rgba(30,41,59,.08); }
-    .bnav.hid { display:none; }
-    .nbtn { border:none; background:transparent; display:flex; flex-direction:column; align-items:center; gap:2px; padding:6px 10px; border-radius:15px; font:700 11px inherit; color:#64748B; cursor:pointer; }
-    .nbtn.on { color:#6D28D9; background:#F3E8FF; }
+    :root{--p:linear-gradient(135deg,#7C3AED,#A855F7);--b:linear-gradient(135deg,#2563EB,#38BDF8);--t:linear-gradient(135deg,#0D9488,#2DD4BF);--o:linear-gradient(135deg,#EA580C,#FB923C);--pk:linear-gradient(135deg,#DB2777,#F472B6);--i:linear-gradient(135deg,#4F46E5,#818CF8);--sh:0 10px 24px -5px rgba(30,41,59,.09)}
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+    input,select{user-select:text}
+    body{margin:0;font-family:'Baloo 2','Poppins',sans-serif;background:radial-gradient(circle at top left,#E0E7FF,#F8FAFF 50%,#FCE7F3);color:#1E293B;min-height:100vh;display:flex;justify-content:center}
+    .app{width:100%;max-width:440px;min-height:100vh;background:#F8FAFF;display:flex;flex-direction:column;position:relative;box-shadow:0 0 40px rgba(79,70,229,.12)}
+    #confetti{position:fixed;inset:0;pointer-events:none;z-index:999}
+    .top{padding:12px 14px 8px;display:flex;align-items:center;justify-content:space-between;gap:6px;background:rgba(248,250,255,.95);backdrop-filter:blur(8px);position:sticky;top:0;z-index:50}
+    .brand{display:flex;align-items:center;gap:8px}
+    .logo{width:38px;height:38px;border-radius:13px;background:var(--p);display:grid;place-items:center;font-size:19px;cursor:pointer;box-shadow:0 5px 12px rgba(124,58,237,.3)}
+    .btitle{font-size:17px;font-weight:800;line-height:1.05;background:var(--p);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .sdot{font-size:10.5px;font-weight:700;color:#64748B;display:block}
+    .pills{display:flex;gap:6px;align-items:center}
+    .pill{display:flex;align-items:center;gap:4px;background:#fff;padding:5px 10px;border-radius:999px;font-weight:800;font-size:14px;box-shadow:var(--sh);border:2px solid #F1F5F9;transition:.2s}
+    .pill.bump{transform:scale(1.18);border-color:#FBBF24}
+    .lvl{background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#92400E;border-color:#FCD34D;font-size:11px}
+    .main{flex:1;padding:8px 18px 100px}
+    .scr,.auth{display:none;animation:up .3s ease}
+    .scr.on,.auth.on{display:block}
+    .auth{padding:10px 18px 36px}
+    @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    .hero{background:linear-gradient(135deg,#4F46E5,#8B5CF6 55%,#EC4899);border-radius:24px;padding:18px;color:#fff;text-align:center;box-shadow:0 12px 24px -6px rgba(124,58,237,.3);margin-bottom:14px}
+    .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#E2E8F0;padding:5px;border-radius:18px;margin-bottom:14px}
+    .tbtn{border:none;border-radius:14px;padding:10px;font:800 15px inherit;background:transparent;color:#64748B;cursor:pointer}
+    .tbtn.on{background:#fff;color:#6D28D9;box-shadow:0 4px 10px rgba(0,0,0,.06)}
+    .card{background:#fff;border-radius:22px;padding:16px;box-shadow:var(--sh);border:2px solid #EEF2FF;margin-bottom:14px}
+    .mascot{background:linear-gradient(135deg,#6366F1,#8B5CF6 55%,#EC4899);border-radius:24px;padding:16px 18px;color:#fff;display:flex;align-items:center;gap:14px;box-shadow:0 12px 24px -6px rgba(124,58,237,.28);margin-bottom:16px}
+    .owl{width:64px;height:64px;flex-shrink:0;background:rgba(255,255,255,.22);border-radius:20px;display:grid;place-items:center;font-size:36px;animation:bob 3s infinite ease-in-out}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    .track{height:11px;background:#E2E8F0;border-radius:999px;overflow:hidden}
+    .fill{height:100%;background:linear-gradient(90deg,#10B981,#34D399);border-radius:999px;transition:width .5s}
+    .stitle{font-size:18px;font-weight:800;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
+    .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+    .scard{border:none;border-radius:22px;padding:16px 10px;color:#fff;text-align:center;cursor:pointer;box-shadow:0 10px 20px -6px rgba(15,23,42,.22);font-family:inherit}
+    .scard:nth-child(1){background:var(--p)}.scard:nth-child(2){background:var(--b)}.scard:nth-child(3){background:var(--o)}.scard:nth-child(4){background:var(--t)}.scard:nth-child(5){background:var(--pk)}.scard:nth-child(6){background:var(--i)}
+    .scard:active{transform:scale(.94)}
+    .btn{border:none;border-radius:18px;padding:12px 16px;font:800 15px inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 0 rgba(0,0,0,.14)}
+    .btn:active:not(:disabled){transform:translateY(3px) scale(.97);box-shadow:0 1px 0 rgba(0,0,0,.14)}
+    .btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+    .btn-p{background:var(--p);color:#fff;width:100%}
+    .inp,.sel{width:100%;border:2px solid #E2E8F0;border-radius:15px;padding:10px 12px;font:700 14.5px inherit;outline:none;background:#fff;color:#1E293B}
+    .lbl{display:block;font-size:12px;font-weight:800;color:#64748B;margin-bottom:4px}
+    .fg{margin-bottom:10px}
+    .avpick{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:6px}
+    .avbtn{width:38px;height:38px;border-radius:12px;border:2px solid transparent;background:#F1F5F9;font-size:20px;cursor:pointer}
+    .avbtn.on{border-color:#7C3AED;background:#EDE9FE;transform:scale(1.1)}
+    .avbtn.dk{background:rgba(255,255,255,.24)}.avbtn.dk.on{border-color:#fff;background:rgba(255,255,255,.45)}
+    .tcard{background:#fff;border-radius:20px;padding:15px;box-shadow:var(--sh);border:2px solid #EEF2FF;margin-bottom:12px}
+    .tcard.done{background:linear-gradient(135deg,#ECFDF5,#fff);border-color:#6EE7B7}
+    .tstats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0 12px;text-align:center}
+    .tstat{background:#F8FAFF;border-radius:12px;padding:6px 4px;font-size:11px;font-weight:700;color:#64748B}
+    .tstat b{display:block;font-size:14px;color:#1E293B}
+    .trophy{font-size:44px;display:inline-block;animation:bob 1.7s infinite ease-in-out}
+    .qtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .xbtn{width:40px;height:40px;border-radius:14px;border:none;background:#fff;box-shadow:var(--sh);font:800 18px inherit;cursor:pointer}
+    .tbadge{background:#FEF3C7;color:#B45309;padding:6px 13px;border-radius:999px;font-weight:800;border:2px solid #FDE68A}
+    .tbadge.urg{background:#FEE2E2;color:#DC2626;border-color:#FCA5A5}
+    .opt{width:100%;min-height:54px;padding:11px 14px;border-radius:18px;border:3px solid #E2E8F0;background:#fff;font:700 16.5px inherit;color:#1E293B;display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;box-shadow:0 4px 0 #E2E8F0;margin-bottom:10px}
+    .oltr{width:32px;height:32px;border-radius:10px;background:#F1F5F9;display:grid;place-items:center;font-weight:800;flex-shrink:0}
+    .opt.ok{background:#ECFDF5;border-color:#10B981;color:#065F46;box-shadow:0 0 18px rgba(16,185,129,.4)}.opt.ok .oltr{background:#10B981;color:#fff}
+    .opt.no{background:#FEF2F2;border-color:#EF4444;color:#991B1B;animation:shk .4s}.opt.no .oltr{background:#EF4444;color:#fff}
+    @keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+    .fb{margin-top:10px;padding:12px;border-radius:16px;font-weight:800;text-align:center;display:none}
+    .fb.ok{display:block;background:#D1FAE5;color:#065F46}.fb.no{display:block;background:#FFEDD5;color:#9A3412}
+    .flt{position:fixed;top:70px;right:24px;background:linear-gradient(135deg,#F59E0B,#FCD34D);color:#78350F;font-weight:800;padding:6px 14px;border-radius:999px;z-index:100;animation:fsc 1.1s forwards}
+    @keyframes fsc{0%{opacity:0;transform:translateY(10px)}25%{opacity:1}100%{opacity:0;transform:translateY(-35px)}}
+    .mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px}
+    .mtile{aspect-ratio:1;border-radius:16px;border:none;background:var(--b);color:#fff;font-size:25px;cursor:pointer;box-shadow:0 4px 0 #1D4ED8}
+    .mtile.fl,.mtile.mt{background:#fff;border:3px solid #38BDF8;box-shadow:var(--sh)}.mtile.mt{border-color:#10B981;background:#ECFDF5}
+    .pod{display:flex;align-items:flex-end;gap:10px;margin:14px 0 18px}
+    .pitem{flex:1;text-align:center;display:flex;flex-direction:column;align-items:center}
+    .pav{width:52px;height:52px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:27px;box-shadow:var(--sh);border:3px solid #fff;margin-bottom:4px}
+    .pitem.f .pav{width:62px;height:62px;font-size:33px;border-color:#FBBF24}
+    .pblk{width:100%;border-radius:18px 18px 10px 10px;color:#fff;font-weight:800;font-size:22px;display:grid;place-items:center}
+    .pitem.f .pblk{height:102px;background:linear-gradient(180deg,#F59E0B,#D97706)}.pitem.s .pblk{height:78px;background:linear-gradient(180deg,#94A3B8,#64748B)}.pitem.t .pblk{height:62px;background:linear-gradient(180deg,#EA580C,#C2410C)}
+    .rrow{background:#fff;border-radius:18px;padding:11px 14px;display:flex;align-items:center;gap:10px;box-shadow:var(--sh);margin-bottom:9px;border:2px solid transparent}
+    .rrow.me{background:linear-gradient(135deg,#EEF2FF,#FCE7F3);border-color:#8B5CF6}
+    .bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+    .btile{background:#fff;border-radius:18px;padding:12px 6px;text-align:center;box-shadow:var(--sh);border:2px solid #F1F5F9}
+    .btile.lk{opacity:.45;filter:grayscale(.8)}.btile.un{border-color:#FCD34D;background:linear-gradient(180deg,#fff,#FFFBEB)}
+    .ogrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .aq{background:#F8FAFF;border:2px solid #E2E8F0;border-radius:15px;padding:11px;margin-bottom:9px;display:flex;justify-content:space-between;gap:8px}
+    .del{border:none;background:#FEE2E2;color:#DC2626;border-radius:10px;padding:6px 10px;font-weight:800;cursor:pointer}
+    .mod{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);display:none;place-items:center;z-index:200;padding:20px}
+    .mod.on{display:grid}
+    .mbox{width:100%;max-width:340px;background:#fff;border-radius:24px;padding:22px 18px;text-align:center}
+    .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:440px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:2px solid #EEF2FF;padding:8px 8px 12px;display:flex;justify-content:space-around;z-index:40;border-radius:24px 24px 0 0;box-shadow:0 -8px 25px rgba(30,41,59,.08)}
+    .bnav.hid{display:none}
+    .nbtn{border:none;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px;border-radius:15px;font:700 11px inherit;color:#64748B;cursor:pointer}
+    .nbtn.on{color:#6D28D9;background:#F3E8FF}
   </style>
 </head>
 <body>
@@ -157,8 +143,8 @@
         <div class="mascot">
           <div class="owl">🦉</div>
           <div>
-            <h2 id="mgreet" style="margin:0 0 3px; font-size:19px;">नमस्ते Friend! आज क्या सीखेंगे?</h2>
-            <p id="mhint" style="margin:0; font-size:13px; opacity:.95;">Smart level is 100 ⭐ away!</p>
+            <h2 id="mgreet" style="margin:0 0 3px; font-size:18px;">नमस्ते Friend! आज क्या सीखेंगे?</h2>
+            <p id="mhint" style="margin:0; font-size:12.5px; opacity:.95;">Smart level is 100 ⭐ away!</p>
           </div>
         </div>
         <div class="card">
@@ -177,12 +163,9 @@
       </section>
 
       <section id="sc-quizzes" class="scr">
-        <div id="qcat">
-          <div class="stitle"><span>⚡ Choose Subject</span></div>
-          <div class="sgrid" id="qgrid"></div>
-        </div>
+        <div id="qcat"><div class="stitle"><span>⚡ Choose Subject</span></div><div class="sgrid" id="qgrid"></div></div>
         <div id="qtopics" style="display:none;">
-          <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
             <button class="xbtn" onclick="backToCats()">←</button>
             <h2 id="ctitle" style="margin:0; font-size:20px;">➗ Math Topics</h2>
           </div>
@@ -191,4 +174,539 @@
         <div id="qact" style="display:none;">
           <div class="qtop">
             <button class="xbtn" onclick="exitQ()">✕</button>
-            <div style="font-weight:800; font-size:16px;" id="qsubj
+            <div style="font-weight:800; font-size:16px;" id="qsubj">➗ Math</div>
+            <div class="tbadge" id="qtmr">⏱️ 20s</div>
+          </div>
+          <div style="margin-bottom:14px;">
+            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; color:#64748B; margin-bottom:5px;">
+              <span id="qcnt">Question 1</span><span id="qearn">+0 ⭐</span>
+            </div>
+            <div class="track"><div class="fill" id="qpfill" style="width:25%"></div></div>
+          </div>
+          <div class="card" style="text-align:center;"><h2 id="qtxt" style="margin:0; font-size:20px;">Loading...</h2></div>
+          <div id="olist"></div>
+          <div class="fb" id="qfb"></div>
+        </div>
+        <div id="qsum" style="display:none;">
+          <div class="card" style="text-align:center; padding:26px 18px;">
+            <div class="trophy">🏆</div>
+            <h2 style="margin:6px 0;">बहुत बढ़िया! Completed!</h2>
+            <p id="ssub" style="color:#64748B; font-weight:700;"></p>
+            <div class="pill" style="display:inline-flex; font-size:19px; padding:8px 20px; margin-bottom:18px; background:#FFFBEB; border-color:#FCD34D;">🪙 <span id="sstars">+0 Points</span></div>
+            <button class="btn btn-p" onclick="exitQ(true)">Back to Topics 📚</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="sc-games" class="scr">
+        <div class="stitle"><span>🎮 Brain Practice Games</span></div>
+        <p style="margin:-6px 0 12px; font-size:12.5px; color:#64748B; font-weight:700;">💡 Practice Mode Only — Leaderboard के असली ⭐ सिर्फ Quizzes से मिलते हैं!</p>
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div><h3 style="margin:0;">🧩 Emoji Memory Match</h3><p style="margin:0; font-size:12px; color:#64748B;">Fun brain practice</p></div>
+            <button class="btn" style="padding:7px 12px; font-size:13px; background:#EEF2FF; color:#4F46E5; box-shadow:none;" onclick="initMem()">↻ Reset</button>
+          </div>
+          <div class="mgrid" id="mgrid"></div>
+          <div id="mstat" style="margin-top:10px; font-weight:800; text-align:center; color:#059669;"></div>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg,#FFF7ED,#fff); border-color:#FED7AA;">
+          <h3 style="margin:0 0 4px;">⚡ Rocket Math Practice</h3>
+          <div id="mmq" style="font-size:28px; font-weight:800; text-align:center; margin:10px 0;">7 + 5 = ?</div>
+          <div id="mmopts" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;"></div>
+          <div id="mmstat" style="margin-top:8px; font-weight:800; text-align:center; font-size:13px; color:#059669;"></div>
+        </div>
+      </section>
+
+      <section id="sc-leaderboard" class="scr">
+        <div class="stitle">
+          <span>🏆 AK Hub Champions</span>
+          <button onclick="syncSheet(true)" style="border:none; background:#EEF2FF; color:#4F46E5; padding:5px 12px; border-radius:999px; font:800 13px inherit; cursor:pointer;">🔄 Refresh</button>
+        </div>
+        <div class="ogrid" style="margin-bottom:12px;">
+          <select id="lbcat" class="sel" onchange="renderLB()">
+            <option value="ALL">🏆 Overall Points</option>
+            <option value="math">➗ Math</option><option value="english">🔤 English</option>
+            <option value="hindi">🕉️ Hindi</option><option value="evs">🌳 EVS</option>
+            <option value="gk">🌍 GK</option><option value="puzzle">🧩 Puzzle</option>
+          </select>
+          <select id="lbf" class="sel" onchange="renderLB()">
+            <option value="ALL">🌍 All Classes</option>
+            <option value="MY">🎓 My Class</option>
+          </select>
+        </div>
+        <div class="pod" id="pod"></div>
+        <div id="rlist"></div>
+      </section>
+
+      <section id="sc-profile" class="scr">
+        <div class="hero" style="background:var(--t);">
+          <div style="font-size:48px;" id="pav">🦊</div>
+          <h2 id="pname" style="margin:4px 0 0;">Student</h2>
+          <p id="pcls" style="margin:2px 0 0; font-weight:700;">🎓 Class 1</p>
+          <p id="plvl" style="margin:2px 0 0; font-weight:700;">🌱 Beginner</p>
+          <div class="avpick" id="pavpick"></div>
+        </div>
+        <div class="stitle"><span>🏅 Your Badges</span></div>
+        <div class="bgrid" id="bgrid"></div>
+        <button class="btn" style="width:100%; background:#FEE2E2; color:#DC2626;" onclick="doLogout()">🚪 Logout / Switch Student</button>
+      </section>
+
+      <section id="sc-admin" class="scr">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h2 style="margin:0;">👩‍🏫 AK Hub Teacher Panel</h2>
+          <button class="btn" style="background:#FEE2E2; color:#DC2626; padding:8px 14px; font-size:13px; box-shadow:none;" onclick="lockAdmin()">🔒 Lock & Exit</button>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 10px;">➕ Add New Question (Unlocks Automatically!)</h3>
+          <div class="ogrid fg">
+            <div><label class="lbl">Subject</label><select id="asubj" class="sel" onchange="renderAdminQ()"><option value="math">➗ Math</option><option value="english">🔤 English</option><option value="hindi">🕉️ Hindi</option><option value="evs">🌳 EVS</option><option value="gk">🌍 GK</option><option value="puzzle">🧩 Puzzle</option></select></div>
+            <div><label class="lbl">Topic Name</label><input id="atopic" class="inp" value="General" placeholder="e.g., Noun" /></div>
+          </div>
+          <div class="fg"><label class="lbl">Question</label><input id="aqtxt" class="inp" placeholder="Hindi or English question..." /></div>
+          <div class="fg ogrid"><input id="ao0" class="inp" placeholder="Option A" /><input id="ao1" class="inp" placeholder="Option B" /><input id="ao2" class="inp" placeholder="Option C" /><input id="ao3" class="inp" placeholder="Option D" /></div>
+          <div class="ogrid fg">
+            <div><label class="lbl">Correct Option</label><select id="acorr" class="sel"><option value="0">Option A</option><option value="1">Option B</option><option value="2">Option C</option><option value="3">Option D</option></select></div>
+            <div><label class="lbl">Points</label><input type="number" id="apts" class="inp" value="10" min="1" max="100" /></div>
+          </div>
+          <button class="btn btn-p" id="asave" onclick="addQ()">Save Question ✅</button>
+          <div id="amsg" style="margin-top:8px; font-weight:800; text-align:center;"></div>
+        </div>
+        <div class="card" style="background:#EEF2FF; border-color:#C7D2FE;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3 style="margin:0; font-size:16px;">📊 Student Attempt History</h3>
+            <button class="btn" style="padding:6px 12px; font-size:12px; background:var(--i); color:#fff; box-shadow:none;" onclick="loadTeacherReport()">Load 🔄</button>
+          </div>
+          <div id="treport" style="font-size:13px; color:#475569;">Tap Load to view student progress.</div>
+        </div>
+        <div class="card" style="background:#FFFBEB; border-color:#FDE68A;">
+          <h3 style="margin:0 0 10px;">🔑 Change Teacher PIN</h3>
+          <div class="fg"><input type="password" id="opin" class="inp" placeholder="Current PIN" maxlength="12" /></div>
+          <div class="ogrid" style="margin-bottom:10px;"><input type="password" id="npin" class="inp" placeholder="New PIN (min 4)" maxlength="12" /><input type="password" id="cpin" class="inp" placeholder="Confirm PIN" maxlength="12" /></div>
+          <button class="btn" id="cpbtn" style="width:100%; background:var(--o); color:#fff;" onclick="changePin()">Update PIN 🔐</button>
+          <div id="pmsg" style="margin-top:8px; font-weight:800; text-align:center; font-size:13px;"></div>
+        </div>
+        <div class="card"><h3 style="margin:0 0 10px;" id="alistt">📋 Questions</h3><div id="alist"></div></div>
+      </section>
+    </main>
+
+    <nav class="bnav hid" id="bnav">
+      <button class="nbtn on" data-s="home" onclick="go('home')"><span>🏠</span><span>Home</span></button>
+      <button class="nbtn" data-s="quizzes" onclick="go('quizzes')"><span>📝</span><span>Quizzes</span></button>
+      <button class="nbtn" data-s="games" onclick="go('games')"><span>🎮</span><span>Games</span></button>
+      <button class="nbtn" data-s="leaderboard" onclick="go('leaderboard')"><span>🏆</span><span>Leaderboard</span></button>
+      <button class="nbtn" data-s="profile" onclick="go('profile')"><span>👤</span><span>Profile</span></button>
+    </nav>
+  </div>
+
+  <!-- Welcome Celebration Modal -->
+  <div class="mod" id="wmod">
+    <div class="mbox">
+      <div class="trophy">🎉</div>
+      <h2 id="wtitle" style="margin:6px 0 4px; color:#6D28D9;">Welcome!</h2>
+      <p id="wmsg" style="font-size:14px; color:#475569; font-weight:700; margin:0 0 16px;"></p>
+      <button class="btn btn-p" onclick="$('wmod').classList.remove('on')">Let's Start Learning! 🚀</button>
+    </div>
+  </div>
+
+  <!-- Teacher PIN Modal -->
+  <div class="mod" id="pmod">
+    <div class="mbox">
+      <div style="font-size:36px;">🔐</div>
+      <h3 style="margin:4px 0;">AK Learning Hub Teacher</h3>
+      <p style="font-size:13px; color:#64748B; margin:0 0 12px;">Enter secret Teacher PIN</p>
+      <input type="password" id="tpin" class="inp" style="text-align:center; font-size:20px; letter-spacing:4px;" maxlength="12" placeholder="••••" onkeydown="if(event.key==='Enter') checkTPin()" />
+      <div id="perr" style="color:#DC2626; font-size:13px; font-weight:700; min-height:20px; margin-top:6px;"></div>
+      <div style="display:flex; gap:10px; margin-top:8px;">
+        <button class="btn" style="flex:1; background:#E2E8F0; color:#1E293B; box-shadow:none;" onclick="closePMod()">Cancel</button>
+        <button class="btn" id="pbtn" style="flex:1; background:var(--p); color:#fff;" onclick="checkTPin()">Unlock</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.onerror = function(m) { var el = document.getElementById('sdot'); if(el) el.textContent = '⚠️ ' + m; };
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxMktOnjRXXVvhwie3FG3dY2AnkK8VXom4uQzIJOvNb4_s8jn7lKnc1fMsvIgasUBFv/exec';
+    const K_S = 'ak_s_v3';
+    const SUB = [{k:'math',n:'Math',e:'➗'},{k:'english',n:'English',e:'🔤'},{k:'hindi',n:'Hindi',e:'🕉️'},{k:'evs',n:'EVS',e:'🌳'},{k:'gk',n:'GK',e:'🌍'},{k:'puzzle',n:'Puzzle',e:'🧩'}];
+    const AVS = ['🦊','🦄','🦁','🐼','🐯','🐰','🐸','🦉'];
+    const BDG = [{i:'🌱',t:'First Step',r:0},{i:'🧠',t:'Smart Star',r:100},{i:'🚀',t:'Fast Kid',r:160},{i:'👑',t:'Champion',r:250},{i:'🔥',t:'Genius',r:320},{i:'💎',t:'Legend',r:400}];
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    let allQs = [], myAtt = {}, lb = [], curCat = 'math', sav = '🦊', tPin = '', wCnt = 0, blkUntil = 0, taps = 0, tapT = null;
+    const saved = (() => { try { const p = JSON.parse(localStorage.getItem(K_S)); return (p && p.studentId) ? p : null; } catch(e){ return null; } })();
+    const st = { id: saved?saved.studentId:'', name: saved?saved.name:'', cls: saved?saved.className:'Class 1', av: saved?saved.avatar:'🦊', stars: saved?(+saved.stars||0):0, q:{act:false,cat:null,topic:null,qs:[],i:0,sc:0,ok:0,tm:20,tid:null,lk:false} };
+
+    function saveStu() { try { st.id ? localStorage.setItem(K_S, JSON.stringify({studentId:st.id,name:st.name,className:st.cls,avatar:st.av,stars:st.stars})) : localStorage.removeItem(K_S); } catch(e){} }
+    function tapLogo() { taps++; clearTimeout(tapT); tapT = setTimeout(()=>taps=0, 2500); if(taps>=5){ taps=0; clearTimeout(tapT); openPMod(); } }
+    async function api(p) { const r = await fetch(SCRIPT_URL + '?' + new URLSearchParams({...p, t:Date.now()}), {redirect:'follow'}); return await r.json(); }
+
+    async function syncSheet(chime=false) {
+      $('sdot').textContent = '🔄 Syncing...';
+      try {
+        const d = await api({action:'getAll', studentId: st.id || ''});
+        if(d && d.ok && Array.isArray(d.questions)) {
+          allQs = d.questions;
+          lb = d.leaderboard || [];
+          if(st.id && d.myAttempts) myAtt = d.myAttempts;
+          if(st.id) { const me = lb.find(x=>x.studentId===st.id); if(me){ st.stars = me.stars; saveStu(); } }
+          $('sdot').textContent = '🟢 Live Google Sheet';
+          renderAll();
+          if($('sc-admin').classList.contains('on')) renderAdminQ();
+          if(chime) tone('ok');
+        } else $('sdot').textContent = '🔴 Sheet Error';
+      } catch(e) { $('sdot').textContent = '🟠 Offline'; }
+    }
+
+    function authMode(m) {
+      $('tlog').classList.toggle('on', m==='login'); $('tsig').classList.toggle('on', m==='signup');
+      $('flog').style.display = m==='login'?'block':'none'; $('fsig').style.display = m==='signup'?'block':'none';
+      $('lerr').textContent=''; $('serr').textContent='';
+    }
+
+    async function doLogin() {
+      const name=$('lname').value.trim(), className=$('lcls').value, pin=$('lpin').value.trim();
+      if(!name||!pin){ $('lerr').textContent='नाम और PIN दोनों भरें!'; return; }
+      $('lbtn').disabled=true; $('lbtn').textContent='Logging in... ⏳'; $('lerr').textContent='';
+      try {
+        const r = await api({action:'loginStudent', data:JSON.stringify({name,className,pin})});
+        if(r && r.ok && r.student) { myAtt = r.myAttempts || {}; applyLogin(r.student, true); tone('ok'); }
+        else { $('lerr').textContent = (r&&r.error)||'Login failed!'; tone('no'); }
+      } catch(e) { $('lerr').textContent='Network error!'; }
+      $('lbtn').disabled=false; $('lbtn').textContent='Login & Play 🎮';
+    }
+
+    async function doSignup() {
+      const name=$('sname').value.trim(), className=$('scls').value, pin=$('spin').value.trim();
+      if(!name||pin.length<4){ $('serr').textContent='नाम और कम से कम 4 अंकों का PIN भरें!'; return; }
+      $('sbtn').disabled=true; $('sbtn').textContent='Creating... ⏳'; $('serr').textContent='';
+      try {
+        const r = await api({action:'signupStudent', data:JSON.stringify({name,className,pin,avatar:sav})});
+        if(r && r.ok && r.student) { myAtt = {}; applyLogin(r.student, true); tone('ok'); confetti(); }
+        else { $('serr').textContent = (r&&r.error)||'Signup failed!'; tone('no'); }
+      } catch(e) { $('serr').textContent='Network error!'; }
+      $('sbtn').disabled=false; $('sbtn').textContent='Create Account 🚀';
+    }
+
+    function applyLogin(s, showWelcome) {
+      st.id=s.studentId; st.name=s.name; st.cls=s.className; st.av=s.avatar||'🦊'; st.stars=+s.stars||0;
+      saveStu(); showApp(); syncSheet(false);
+      if(showWelcome) {
+        $('wtitle').textContent = `नमस्ते ${st.name}! 🎉`;
+        $('wmsg').textContent = `Welcome to AK Learning Hub (${st.cls})! आपके पास अभी ${st.stars} ⭐ Points हैं। नए सवाल खेलकर नंबर बढ़ाएं!`;
+        $('wmod').classList.add('on');
+        confetti();
+      }
+    }
+
+    function showAuth() { $('auth').classList.add('on'); $('appmain').style.display='none'; $('bnav').classList.add('hid'); $('hpills').style.display='none'; }
+    function showApp() { $('auth').classList.remove('on'); $('appmain').style.display='block'; $('bnav').classList.remove('hid'); $('hpills').style.display='flex'; go('home'); }
+    function doLogout() { if(!confirm('दूसरे बच्चे का अकाउंट खोलने के लिए Logout करें?')) return; st.id=''; st.name=''; st.stars=0; myAtt={}; saveStu(); $('lpin').value=''; showAuth(); tone('tap'); }
+
+    let ac=null;
+    function tone(t) {
+      try {
+        if(!ac) ac=new (window.AudioContext||window.webkitAudioContext)();
+        const n=ac.currentTime, o=ac.createOscillator(), g=ac.createGain(); o.connect(g); g.connect(ac.destination);
+        if(t==='ok'){ o.type='triangle'; o.frequency.setValueAtTime(523,n); o.frequency.setValueAtTime(659,n+.09); o.frequency.setValueAtTime(784,n+.18); g.gain.setValueAtTime(.15,n); g.gain.exponentialRampToValueAtTime(.001,n+.4); o.start(n); o.stop(n+.4); }
+        else if(t==='no'){ o.frequency.setValueAtTime(260,n); o.frequency.linearRampToValueAtTime(200,n+.2); g.gain.setValueAtTime(.13,n); g.gain.exponentialRampToValueAtTime(.001,n+.25); o.start(n); o.stop(n+.25); }
+        else { o.frequency.setValueAtTime(480,n); g.gain.setValueAtTime(.07,n); g.gain.exponentialRampToValueAtTime(.001,n+.08); o.start(n); o.stop(n+.08); }
+      } catch(e){}
+    }
+
+    const lvl = s => s>=250?{l:'👑 Champion',s:'Champion',n:null}:s>=100?{l:'⚡ Smart',s:'Smart',n:250}:{l:'🌱 Beginner',s:'Beginner',n:100};
+
+    function getTopics(catKey) {
+      const map = {};
+      allQs.filter(q => !catKey || q.categoryId === catKey).forEach(q => {
+        const k = q.categoryId + '||' + q.topicId;
+        if(!map[k]) map[k] = { cat: q.categoryId, topic: q.topicId, total: 0, done: 0, pts: 0, remQs: [] };
+        map[k].total++;
+        const a = myAtt[q.questionId];
+        if(a) { map[k].done++; map[k].pts += Number(a.awardedPoints) || 0; }
+        else { map[k].remQs.push(q); }
+      });
+      return Object.values(map);
+    }
+
+    function renderAll() {
+      const l = lvl(st.stars);
+      $('hstars').textContent = st.stars; $('hlvl').textContent = l.l;
+      $('mgreet').textContent = `नमस्ते ${st.name||'Friend'}! आज क्या सीखेंगे?`;
+      $('mhint').textContent = l.n ? `${st.cls} • ${l.s==='Beginner'?'Smart':'Champion'} is ${l.n-st.stars} ⭐ away!` : `${st.cls} • Champion! 👑`;
+
+      const totQ = allQs.length, doneQ = allQs.filter(q => myAtt[q.questionId]).length, pct = totQ ? Math.round((doneQ/totQ)*100) : 0;
+      $('glbl').textContent = `${doneQ} / ${totQ} Done (${pct}%)`;
+      $('gfill').style.width = `${pct}%`;
+
+      ['hgrid','qgrid'].forEach(id => {
+        $(id).innerHTML = SUB.map(s => {
+          const qs = allQs.filter(q => q.categoryId === s.k);
+          const rem = qs.filter(q => !myAtt[q.questionId]).length;
+          return `<button class="scard" onclick="openCat('${s.k}')">
+            <span style="font-size:38px;display:block;margin-bottom:4px;">${s.e}</span>
+            <span style="font-size:17px;font-weight:800;display:block;">${s.n}</span>
+            <span style="font-size:11.5px;background:${rem===0&&qs.length?'rgba(16,185,129,.85)':'rgba(255,255,255,.24)'};padding:2px 10px;border-radius:999px;display:inline-block;margin-top:5px;">
+              ${qs.length===0 ? '0 Qs' : rem===0 ? '🏆 Completed' : rem + ' New Left'}
+            </span></button>`;
+        }).join('');
+      });
+
+      const topics = getTopics(null);
+      $('tdash').innerHTML = topics.length ? topics.map(t => {
+        const sb = SUB.find(x => x.k === t.cat) || {e:'📚', n:t.cat};
+        const tp = t.total ? Math.round((t.done/t.total)*100) : 0, isDone = t.done === t.total && t.total > 0;
+        return `<div class="tcard ${isDone?'done':''}">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-weight:800; font-size:15px;">${sb.e} ${esc(sb.n)} → ${esc(t.topic)}</span>
+            <span style="font-size:12px; font-weight:800; color:${isDone?'#059669':'#6366F1'};">${isDone?'🏆 Badge Earned':tp+'%'}</span>
+          </div>
+          <div class="track"><div class="fill" style="width:${tp}%"></div></div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; color:#64748B; margin-top:6px;">
+            <span>Done: ${t.done}/${t.total} (Left: ${t.remQs.length})</span><span>⭐ ${t.pts} pts</span>
+          </div>
+        </div>`;
+      }).join('') : '<div class="card" style="text-align:center;color:#64748B;">No questions yet.</div>';
+
+      $('pav').textContent = st.av; $('pname').textContent = st.name||'Student'; $('pcls').textContent = `🎓 ${st.cls}`; $('plvl').textContent = l.l;
+      $('pavpick').innerHTML = AVS.map(a => `<button class="avbtn dk ${a===st.av?'on':''}" onclick="pickAv('${a}')">${a}</button>`).join('');
+      $('bgrid').innerHTML = BDG.map(b => `<div class="btile ${st.stars>=b.r?'un':'lk'}"><div style="font-size:30px;">${b.i}</div><div style="font-weight:800;font-size:12.5px;">${b.t}</div><div style="font-size:11px;color:#64748B;">${st.stars>=b.r?'Unlocked!':b.r+' ⭐'}</div></div>`).join('');
+      renderLB();
+      if($('qtopics').style.display === 'block') renderTopics();
+    }
+
+    async function pickAv(a) {
+      st.av = a; saveStu(); tone('tap'); renderAll();
+      try { await api({action:'updateAvatar', studentId:st.id, avatar:a}); } catch(e){}
+    }
+
+    function openCat(k) {
+      curCat = k; go('quizzes');
+      $('qcat').style.display='none'; $('qact').style.display='none'; $('qsum').style.display='none';
+      $('qtopics').style.display='block';
+      const sb = SUB.find(x => x.k === k) || {e:'📚', n:k};
+      $('ctitle').textContent = `${sb.e} ${sb.n} Topics`;
+      renderTopics();
+    }
+
+    function backToCats() { $('qtopics').style.display='none'; $('qcat').style.display='block'; }
+
+    function renderTopics() {
+      const list = getTopics(curCat);
+      if(!list.length) { $('tlist').innerHTML = '<div class="card" style="text-align:center;color:#64748B;">इस विषय में अभी कोई सवाल नहीं है!</div>'; return; }
+      $('tlist').innerHTML = list.map(t => {
+        const rem = t.remQs.length, pct = t.total ? Math.round((t.done/t.total)*100) : 0, done = rem === 0;
+        return `<div class="tcard ${done?'done':''}">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="margin:0; font-size:18px;">📌 ${esc(t.topic)}</h3>
+            <span style="font-weight:800; font-size:13px; color:${done?'#059669':'#4F46E5'};">${pct}%</span>
+          </div>
+          <div class="tstats">
+            <div class="tstat"><b>${t.total}</b>Total</div>
+            <div class="tstat"><b>${t.done}</b>Done</div>
+            <div class="tstat"><b>${rem}</b>Left</div>
+            <div class="tstat"><b>${t.pts}⭐</b>Earned</div>
+          </div>
+          <div class="track" style="margin-bottom:12px;"><div class="fill" style="width:${pct}%"></div></div>
+          ${done ? `
+            <div style="text-align:center; padding:8px 4px;">
+              <div class="trophy">🏆</div>
+              <div style="font-weight:800; color:#065F46; font-size:14px;">Congratulations! You have completed all available questions in this topic.</div>
+              <button class="btn" style="width:100%; margin-top:10px; background:#CBD5E1; color:#475569;" disabled>✅ All Questions Completed</button>
+            </div>
+          ` : `<button class="btn btn-p" onclick="startTopic('${esc(t.topic)}')">Play ${rem} New Question${rem>1?'s':''} 🚀</button>`}
+        </div>`;
+      }).join('');
+    }
+
+    function startTopic(topicName) {
+      const t = getTopics(curCat).find(x => x.topic === topicName);
+      if(!t || !t.remQs.length) { renderTopics(); return; }
+      st.q = { act:true, cat:curCat, topic:topicName, qs:[...t.remQs], i:0, sc:0, ok:0, tm:20, tid:null, lk:false };
+      $('qtopics').style.display='none'; $('qact').style.display='block'; $('bnav').classList.add('hid');
+      const sb = SUB.find(x => x.k === curCat) || {e:'📚'};
+      $('qsubj').textContent = `${sb.e} ${topicName}`;
+      loadQ();
+    }
+
+    function loadQ() {
+      const q = st.q.qs[st.q.i], tot = st.q.qs.length;
+      st.q.lk = false; st.q.tm = 20;
+      $('qcnt').textContent = `Question ${st.q.i+1} of ${tot}`; $('qearn').textContent = `+${st.q.sc} ⭐`;
+      $('qpfill').style.width = `${((st.q.i+1)/tot)*100}%`; $('qtxt').textContent = q.q;
+      $('qfb').className = 'fb'; $('qfb').textContent = '';
+      const L = ['A','B','C','D'];
+      $('olist').innerHTML = q.opts.map((o,i) => `<button class="opt" onclick="ansQ(${i})"><span class="oltr">${L[i]}</span><span>${esc(o)}</span></button>`).join('');
+      clearInterval(st.q.tid);
+      const u = () => { $('qtmr').textContent = `⏱️ ${st.q.tm}s`; $('qtmr').classList.toggle('urg', st.q.tm<=5); };
+      u(); st.q.tid = setInterval(() => { st.q.tm--; u(); if(st.q.tm<=0){ clearInterval(st.q.tid); ansQ(-1); } }, 1000);
+    }
+
+    async function ansQ(idx) {
+      if(st.q.lk) return;
+      st.q.lk = true; clearInterval(st.q.tid);
+      const q = st.q.qs[st.q.i], bs = document.querySelectorAll('#olist .opt');
+      bs.forEach(b => b.disabled = true);
+      $('qfb').className = 'fb'; $('qfb').style.display = 'block'; $('qfb').textContent = 'Checking on server... ⏳';
+
+      try {
+        const res = await api({ action:'submitAttempt', studentId:st.id, questionId:q.questionId, selectedIndex:idx });
+        if(res && res.ok) {
+          if(res.attempt) myAtt[q.questionId] = res.attempt;
+          else myAtt[q.questionId] = { awardedPoints: 0 };
+          st.stars = Number(res.totalStars) || st.stars;
+          saveStu();
+
+          if(res.duplicate) {
+            $('qfb').className = 'fb no'; $('qfb').textContent = 'यह सवाल पहले ही हो चुका है! (0 Extra Points)';
+            tone('no');
+          } else if(res.isCorrect) {
+            if(idx>=0) bs[idx].classList.add('ok');
+            $('qfb').className = 'fb ok'; $('qfb').textContent = `शाबाश! 🎉 +${res.awardedPoints} Points!`;
+            st.q.sc += res.awardedPoints; st.q.ok++;
+            $('qearn').textContent = `+${st.q.sc} ⭐`;
+            const pill = $('hspill'); pill.classList.remove('bump'); void pill.offsetWidth; pill.classList.add('bump');
+            setTimeout(()=>pill.classList.remove('bump'),350);
+            const fl = document.createElement('div'); fl.className='flt'; fl.textContent=`+${res.awardedPoints} ⭐`; document.body.appendChild(fl); setTimeout(()=>fl.remove(),1100);
+            tone('ok'); confetti();
+          } else {
+            if(idx>=0) bs[idx].classList.add('no');
+            if(bs[res.correctIndex]) bs[res.correctIndex].classList.add('ok');
+            $('qfb').className = 'fb no'; $('qfb').textContent = `कोई बात नहीं, फिर कोशिश करो 💪 (Correct: ${q.opts[res.correctIndex]})`;
+            tone('no');
+          }
+          renderAll();
+        } else {
+          $('qfb').className = 'fb no'; $('qfb').textContent = (res&&res.error)||'Error saving!';
+        }
+      } catch(e) { $('qfb').className = 'fb no'; $('qfb').textContent = 'Network error!'; }
+
+      setTimeout(() => {
+        st.q.i++;
+        if(st.q.i < st.q.qs.length) loadQ();
+        else {
+          st.q.act = false; $('qact').style.display='none'; $('qsum').style.display='block'; $('bnav').classList.remove('hid');
+          $('ssub').textContent = `${st.q.ok} / ${st.q.qs.length} Correct in ${st.q.topic}!`;
+          $('sstars').textContent = `+${st.q.sc} Points Earned`;
+          syncSheet(false); confetti();
+        }
+      }, 1600);
+    }
+
+    function exitQ(sil=false) {
+      clearInterval(st.q.tid); st.q.act=false;
+      $('qact').style.display='none'; $('qsum').style.display='none'; $('qcat').style.display='none'; $('qtopics').style.display='block';
+      if(st.id) $('bnav').classList.remove('hid');
+      renderTopics();
+      if(!sil) tone('tap');
+    }
+
+    function go(s) {
+      if(st.q.act) { clearInterval(st.q.tid); st.q.act=false; }
+      if(s!=='admin') tPin='';
+      if(s==='admin' && !tPin){ openPMod(); return; }
+      tone('tap');
+      document.querySelectorAll('.scr').forEach(x=>x.classList.remove('on'));
+      $('sc-'+s).classList.add('on');
+      document.querySelectorAll('.nbtn').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
+      if(s==='quizzes') { $('qact').style.display='none'; $('qsum').style.display='none'; $('qtopics').style.display='none'; $('qcat').style.display='block'; }
+      if(s==='leaderboard') syncSheet(false);
+      if(s==='admin'){ $('auth').classList.remove('on'); $('appmain').style.display='block'; $('bnav').classList.add('hid'); renderAdminQ(); }
+      else if(st.id) $('bnav').classList.remove('hid');
+    }
+
+    // Teacher Panel
+    function openPMod() { $('tpin').value=''; $('perr').textContent=''; $('pmod').classList.add('on'); setTimeout(()=>$('tpin').focus(),100); }
+    function closePMod() { $('pmod').classList.remove('on'); }
+    async function checkTPin() {
+      if(Date.now()<blkUntil){ $('perr').textContent='Wait 30s!'; return; }
+      const p=$('tpin').value.trim(); if(!p){ $('perr').textContent='Enter PIN'; return; }
+      $('pbtn').disabled=true; $('pbtn').textContent='Checking...';
+      try {
+        const r=await api({action:'verifyPin', pin:p});
+        if(r && r.ok){ wCnt=0; tPin=p; closePMod(); tone('ok'); go('admin'); }
+        else { wCnt++; tone('no'); if(wCnt>=5){blkUntil=Date.now()+30000;wCnt=0;$('perr').textContent='Locked 30s!';} else $('perr').textContent='Wrong PIN!'; }
+      } catch(e) { $('perr').textContent='Network error!'; }
+      $('pbtn').disabled=false; $('pbtn').textContent='Unlock';
+    }
+    function lockAdmin() { tPin=''; ['opin','npin','cpin'].forEach(i=>$(i).value=''); $('pmsg').textContent=''; st.id?showApp():showAuth(); }
+    async function changePin() {
+      const o=$('opin').value.trim(), n=$('npin').value.trim(), c=$('cpin').value.trim();
+      if(!o||n.length<4||n!==c){ $('pmsg').style.color='#DC2626'; $('pmsg').textContent='4+ अंकों का सही PIN भरें!'; return; }
+      $('cpbtn').disabled=true;
+      try {
+        const r=await api({action:'changePin', oldPin:o, newPin:n});
+        if(r&&r.ok){ tPin=n; $('pmsg').style.color='#059669'; $('pmsg').textContent='PIN Changed! ✅'; ['opin','npin','cpin'].forEach(i=>$(i).value=''); tone('ok'); }
+        else { $('pmsg').style.color='#DC2626'; $('pmsg').textContent=(r&&r.error)||'Error!'; tone('no'); }
+      } catch(e){ $('pmsg').textContent='Network error!'; }
+      $('cpbtn').disabled=false;
+    }
+    async function addQ() {
+      const subject=$('asubj').value, topic=$('atopic').value.trim()||'General', q=$('aqtxt').value.trim(), opts=[0,1,2,3].map(i=>$('ao'+i).value.trim()), ans=+$('acorr').value, points=+$('apts').value||10;
+      if(!q||opts.some(x=>!x)){ $('amsg').style.color='#DC2626'; $('amsg').textContent='सवाल और चारों ऑप्शन भरें!'; return; }
+      $('asave').disabled=true; $('asave').textContent='Saving... ⏳';
+      try {
+        const r=await api({action:'addQuestion', pin:tPin, data:JSON.stringify({subject,topic,q,opts,ans,points})});
+        if(r&&r.ok){ await syncSheet(false); $('amsg').style.color='#059669'; $('amsg').textContent='Saved! ✅ New question unlocked for students!'; $('aqtxt').value=''; [0,1,2,3].forEach(i=>$('ao'+i).value=''); tone('ok'); }
+        else throw new Error((r&&r.error)||'Error');
+      } catch(e){ $('amsg').style.color='#DC2626'; $('amsg').textContent=e.message; tone('no'); }
+      $('asave').disabled=false; $('asave').textContent='Save Question ✅';
+    }
+    async function delQ(qid) { try{ const r=await api({action:'deleteQuestion',pin:tPin,questionId:qid}); if(r&&r.ok) await syncSheet(false); }catch(e){} tone('tap'); }
+    function renderAdminQ() {
+      const k=$('asubj').value, sb=SUB.find(x=>x.k===k), l=allQs.filter(q=>q.categoryId===k);
+      $('alistt').textContent=`📋 ${sb.n} (${l.length})`;
+      $('alist').innerHTML=l.length?l.map((x,i)=>`<div class="aq"><div><div style="font-size:11px;color:#6366F1;font-weight:800;">${esc(x.topicId)} • ${x.points} pts • ${x.questionId}</div><div style="font-weight:800;">${i+1}. ${esc(x.q)}</div></div><button class="del" onclick="delQ('${x.questionId}')">🗑️</button></div>`).join(''):'<p style="text-align:center;color:#64748B;">No questions</p>';
+    }
+    async function loadTeacherReport() {
+      $('treport').textContent='Loading... ⏳';
+      try {
+        const r=await api({action:'teacherReport', pin:tPin});
+        if(r&&r.ok&&r.students) {
+          const tot = allQs.length;
+          $('treport').innerHTML = r.students.length ? r.students.map(s => {
+            const done = Object.keys(s.attempts||{}).length, rem = Math.max(0, tot - done);
+            return `<div class="aq" style="display:block;">
+              <div style="display:flex;justify-content:space-between;font-weight:800;"><span>${s.avatar} ${esc(s.name)} (${esc(s.className)})</span><span style="color:#B45309;">${s.stars} ⭐</span></div>
+              <div style="font-size:12px;margin-top:3px;">Attempted: <b>${done}</b> / ${tot} • Remaining: <b>${rem}</b></div>
+            </div>`;
+          }).join('') : 'No students yet.';
+        } else $('treport').textContent='Error loading report.';
+      } catch(e){ $('treport').textContent='Network error!'; }
+    }
+
+    // Practice Mini Games (0 Points)
+    let mc=[], mf=[], ml=false, mm=0;
+    function initMem(){ mc=['🦁','🚀','🌈','🍎','🦋','⚽','🦁','🚀','🌈','🍎','🦋','⚽'].sort(()=>Math.random()-.5).map((e,i)=>({i,e,f:0,m:0})); mf=[]; ml=false; mm=0; $('mstat').textContent=''; rMem(); }
+    function rMem(){ $('mgrid').innerHTML=mc.map(c=>`<button class="mtile ${c.f?'fl':''} ${c.m?'mt':''}" onclick="fMem(${c.i})">${c.f||c.m?c.e:'❓'}</button>`).join(''); }
+    function fMem(i){ const c=mc[i]; if(ml||c.f||c.m) return; tone('tap'); c.f=1; mf.push(c); rMem(); if(mf.length===2){ ml=true; const[a,b]=mf; if(a.e===b.e){ a.m=b.m=1; mm+=2; mf=[]; ml=false; tone('ok'); rMem(); if(mm===mc.length){$('mstat').textContent='शाबाश! Great Practice! 🎉'; confetti();} } else setTimeout(()=>{a.f=b.f=0;mf=[];ml=false;rMem();},650); } }
+    let mma=12;
+    function nextMM(){ const a=2+Math.floor(Math.random()*12),b=2+Math.floor(Math.random()*12); mma=a+b; $('mmq').textContent=`${a} + ${b} = ?`; const s=new Set([mma]); while(s.size<3)s.add(mma+Math.floor(Math.random()*7)-3); $('mmopts').innerHTML=[...s].sort(()=>Math.random()-.5).map(v=>`<button class="btn" style="background:#fff;border:2px solid #FB923C;color:#EA580C;" onclick="if(${v}===mma){tone('ok');$('mmstat').textContent='Correct! Great Practice ✅';nextMM();}else{tone('no');$('mmstat').textContent='Try again! 💪';}">${v}</button>`).join(''); }
+
+    // Leaderboard
+    function renderLB() {
+      const cat = $('lbcat').value, clsF = $('lbf').value;
+      let l = lb.map(x => ({ ...x, pts: cat==='ALL' ? (Number(x.stars)||0) : ((x.catPoints&&x.catPoints[cat])||0) }));
+      if(clsF==='MY' && st.cls) l = l.filter(x => x.className === st.cls);
+      l.sort((a,b) => b.pts - a.pts);
+      if(l.length>=3){
+        const p=[{x:l[1],c:'s',m:'🥈'},{x:l[0],c:'f',m:'🥇'},{x:l[2],c:'t',m:'🥉'}];
+        $('pod').innerHTML=p.map(z=>`<div class="pitem ${z.c}"><div class="pav">${z.x.avatar}</div><div style="font-weight:800;font-size:13px;">${esc(z.x.name)}</div><div style="font-size:11px;color:#6366F1;font-weight:700;">${esc(z.x.className||'')}</div><div style="font-size:12px;color:#64748B;margin-bottom:6px;">${z.x.pts} ⭐</div><div class="pblk">${z.m}</div></div>`).join('');
+      } else $('pod').innerHTML='';
+      const si=l.length>=3?3:0;
+      $('rlist').innerHTML=l.slice(si).map((p,i)=>`<div class="rrow ${p.studentId===st.id?'me':''}"><div style="width:28px;font-weight:800;text-align:center;">#${si+i+1}</div><div style="font-size:22px;">${p.avatar}</div><div style="flex:1;"><div style="font-weight:800;">${esc(p.name)} ${p.studentId===st.id?'(You)':''}</div><div style="font-size:12px;color:#6366F1;font-weight:700;">${esc(p.className||'')} • ${lvl(p.stars).s}</div></div><div class="pill" style="background:#FEF3C7;color:#B45309;">${p.pts} ⭐</div></div>`).join('');
+    }
+
+    const cv=$('confetti'), cx=cv.getContext('2d'); let pts=[], run=false;
+    const rsz=()=>{cv.width=innerWidth;cv.height=innerHeight;}; addEventListener('resize',rsz); rsz();
+    function confetti(){ const c=['#7C3AED','#38BDF8','#10B981','#F59E0B','#EC4899']; for(let i=0;i<60;i++)pts.push({x:innerWidth/2+(Math.random()-.5)*120,y:innerHeight*.45,vx:(Math.random()-.5)*12,vy:(Math.random()-1.2)*13,s:5+Math.random()*7,c:c[i%5],l:1}); if(!run){run=true;anim();} }
+    function anim(){ cx.clearRect(0,0,cv.width,cv.height); pts=pts.filter(p=>p.l>0); pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.l-=.016; cx.globalAlpha=Math.max(0,p.l); cx.fillStyle=p.c; cx.fillRect(p.x,p.y,p.s,p.s*.7);}); if(pts.length)requestAnimationFrame(anim); else run=false; }
+
+    (function rSav(){ $('sav').innerHTML=AVS.map(a=>`<button type="button" class="avbtn ${a===sav?'on':''}" onclick="sav='${a}';document.querySelectorAll('#sav .avbtn').forEach(b=>b.classList.toggle('on',b.textContent==='${a}'))">${a}</button>`).join(''); })();
+    initMem(); nextMM();
+    if(st.id){ showApp(); renderAll(); } else showAuth();
+    syncSheet(false);
+    if(new URLSearchParams(location.search).get('teacher')==='1') openPMod();
+  </script>
+</body>
+</html>
