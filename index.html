@@ -31,7 +31,6 @@ td,th{padding:8px;border-bottom:1px solid #eee;text-align:left}
 <div class="wrap">
 <h1>🎓 AK Learning Hub</h1>
 
-<!-- लॉगिन / साइन-अप -->
 <div id="sAuth" class="hide">
   <div class="row">
     <button class="alt" onclick="tab('l')">लॉगिन</button>
@@ -54,7 +53,6 @@ td,th{padding:8px;border-bottom:1px solid #eee;text-align:left}
   <button class="alt" style="font-size:13px;padding:8px" onclick="admin()">⚙️ एडमिन</button>
 </div>
 
-<!-- होम -->
 <div id="sHome" class="hide">
   <div class="card">
     <div id="hi"></div>
@@ -65,7 +63,6 @@ td,th{padding:8px;border-bottom:1px solid #eee;text-align:left}
   <button class="alt" onclick="logout()">लॉगआउट</button>
 </div>
 
-<!-- क्विज़ -->
 <div id="sQuiz" class="hide">
   <div class="card">
     <div class="row"><b id="qn"></b><b id="qp"></b><b>⏱ <span id="tl">15</span></b></div>
@@ -75,7 +72,6 @@ td,th{padding:8px;border-bottom:1px solid #eee;text-align:left}
   </div>
 </div>
 
-<!-- रिज़ल्ट -->
 <div id="sRes" class="hide">
   <div class="card" style="text-align:center">
     <h2>🎉 शाबाश!</h2>
@@ -86,13 +82,11 @@ td,th{padding:8px;border-bottom:1px solid #eee;text-align:left}
   </div>
 </div>
 
-<!-- लीडरबोर्ड -->
 <div id="sLb" class="hide">
   <div class="card"><h3>🏆 टॉप 20</h3><table id="lbt"></table></div>
   <button onclick="U?home():show('sAuth')">वापस</button>
 </div>
 
-<!-- एडमिन -->
 <div id="sAdmin" class="hide">
   <div class="card">
     <h3>👨‍🏫 सभी स्टूडेंट्स</h3>
@@ -105,7 +99,7 @@ td,th{padding:8px;border-bottom:1px solid #eee;text-align:left}
 <div id="load" class="hide">⏳ रुको...</div>
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbzt1YZTkt4GGM24CYTDIalJmT3sDKB8_X9Ubc287dBPD3zSEho0A1WLs9RvaHwfBabz3A/exec";
+const API = "https://script.google.com/macros/s/AKfycbz9XBZ1muJ5PZU7JvynG3FuUWGHhLKyUTuKCF0D3RhqxcVKrKeDXaEIwEt3wku3eQzAKQ/exec";
 const $ = i => document.getElementById(i);
 let U = JSON.parse(localStorage.getItem("akUser")||"null");
 let Q=[], qi=0, pts=0, tm=null, locked=false, SUBS=[], AK="";
@@ -127,14 +121,12 @@ async function call(d,quiet){
   }
 }
 
-/* क्लास की लिस्ट */
 ["lc","sc"].forEach(id=>{
   let h='<option value="">क्लास चुनो</option>';
   for(let i=1;i<=10;i++) h+=`<option value="${i}">क्लास ${i}</option>`;
   $(id).innerHTML=h;
 });
 
-/* लॉगिन / साइन-अप */
 function tab(t){
   $("fLogin").classList.toggle("hide",t!="l");
   $("fSign").classList.toggle("hide",t!="s");
@@ -161,7 +153,6 @@ function logout(){
   localStorage.removeItem("akUser"); U=null; show("sAuth");
 }
 
-/* होम */
 async function home(){
   show("sHome");
   $("hi").textContent="नमस्ते, "+U.name+" 👋  (ID: "+U.studentId+")";
@@ -174,7 +165,6 @@ async function home(){
   ).join("") || "अभी कोई सवाल नहीं है";
 }
 
-/* क्विज़ */
 async function start(i){
   const r = await call({action:"questions",studentId:U.studentId,pin:U.pin,subject:SUBS[i].subject});
   if(!r.ok || !r.questions.length) return alert(r.msg||"इस विषय के सारे सवाल हो चुके!");
@@ -208,11 +198,12 @@ async function pick(c){
     if(c) $("o"+c).classList.add(r.correct?"ok":"bad");
     const e=$("o"+r.answer); if(e) e.classList.add("ok");
     pts+=r.points; $("qp").textContent="अंक: "+pts;
+  }else{
+    alert(r.msg);
   }
   setTimeout(()=>{ qi++; nextQ(); },1500);
 }
 
-/* लीडरबोर्ड */
 async function lb(){
   show("sLb");
   const r = await call({action:"leaderboard"});
@@ -221,7 +212,6 @@ async function lb(){
   ).join("") : "";
 }
 
-/* एडमिन */
 async function admin(){
   AK=prompt("एडमिन कुंजी:"); if(!AK) return;
   const r = await call({action:"admin_students",adminKey:AK});
@@ -238,7 +228,6 @@ async function rp(id){
   alert(r.ok?"PIN बदल गया ✅":r.msg);
 }
 
-/* शुरुआत */
 if(U) home(); else show("sAuth");
 </script>
 </body>
