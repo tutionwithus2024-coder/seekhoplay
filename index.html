@@ -123,14 +123,14 @@
       </div>
       <div class="card" id="flog">
         <div class="fg"><label class="lbl">Student Name (अपना नाम)</label><input id="lname" class="inp" maxlength="20" placeholder="e.g., Rahul" /></div>
-        <div class="fg"><label class="lbl">Class (कक्षा चुनें)</label><select id="lcls" class="sel"></select></div>
+        <div class="fg"><label class="lbl">Class (कक्षा चुनें)</label><select id="lcls" class="sel"><option>Nursery</option><option>LKG</option><option>UKG</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option></select></div>
         <div class="fg"><label class="lbl">Your 4-Digit PIN (पिन)</label><input type="password" inputmode="numeric" id="lpin" class="inp" maxlength="8" placeholder="••••" onkeydown="if(event.key==='Enter') doLogin()" /></div>
         <div id="lerr" style="color:#DC2626; font-size:13px; font-weight:700; min-height:18px; text-align:center; margin-bottom:8px;"></div>
         <button class="btn btn-p" id="lbtn" onclick="doLogin()">Login & Play 🎮</button>
       </div>
       <div class="card" id="fsig" style="display:none;">
         <div class="fg"><label class="lbl">Student Name (अपना नाम लिखें)</label><input id="sname" class="inp" maxlength="20" placeholder="e.g., Rahul Sharma" /></div>
-        <div class="fg"><label class="lbl">Class (अपनी कक्षा चुनें)</label><select id="scls" class="sel"></select></div>
+        <div class="fg"><label class="lbl">Class (अपनी कक्षा चुनें)</label><select id="scls" class="sel"><option>Nursery</option><option>LKG</option><option>UKG</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option></select></div>
         <div class="fg"><label class="lbl">Create Secret PIN (4 अंकों का PIN बनाएं)</label><input type="password" inputmode="numeric" id="spin" class="inp" maxlength="8" placeholder="e.g., 1234" /></div>
         <div class="fg"><label class="lbl">Pick Avatar</label><div class="avpick" id="sav"></div></div>
         <div id="serr" style="color:#DC2626; font-size:13px; font-weight:700; min-height:18px; text-align:center; margin-bottom:8px;"></div>
@@ -215,4 +215,238 @@
       </section>
 
       <section id="sc-admin" class="scr">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bo
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;"><h2 style="margin:0;">👩‍🏫 AK Hub Teacher Panel</h2><button class="btn" style="background:#FEE2E2; color:#DC2626; padding:8px 14px; font-size:13px; box-shadow:none;" onclick="lockAdmin()">🔒 Lock & Exit</button></div>
+        <div class="card">
+          <h3 style="margin:0 0 10px;">➕ Add New Question</h3>
+          <div class="ogrid fg"><div><label class="lbl">Subject</label><select id="asubj" class="sel" onchange="renderAdminQ()"><option value="math">➗ Math</option><option value="english">🔤 English</option><option value="hindi">🕉️ Hindi</option><option value="evs">🌳 EVS</option><option value="gk">🌍 GK</option><option value="puzzle">🧩 Puzzle</option></select></div><div><label class="lbl">Topic Name</label><input id="atopic" class="inp" value="General" placeholder="e.g., Noun" /></div></div>
+          <div class="fg"><label class="lbl">Question</label><input id="aqtxt" class="inp" placeholder="Hindi or English question..." /></div>
+          <div class="fg ogrid"><input id="ao0" class="inp" placeholder="Option A" /><input id="ao1" class="inp" placeholder="Option B" /><input id="ao2" class="inp" placeholder="Option C" /><input id="ao3" class="inp" placeholder="Option D" /></div>
+          <div class="ogrid fg"><div><label class="lbl">Correct Option</label><select id="acorr" class="sel"><option value="0">Option A</option><option value="1">Option B</option><option value="2">Option C</option><option value="3">Option D</option></select></div><div><label class="lbl">Points</label><input type="number" id="apts" class="inp" value="10" min="1" max="100" /></div></div>
+          <button class="btn btn-p" id="asave" onclick="addQ()">Save Question ✅</button>
+          <div id="amsg" style="margin-top:8px; font-weight:800; text-align:center;"></div>
+        </div>
+        <div class="card" style="background:#EEF2FF; border-color:#C7D2FE;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;"><h3 style="margin:0; font-size:16px;">📊 Student Attempt History</h3><button class="btn" style="padding:6px 12px; font-size:12px; background:var(--i); color:#fff; box-shadow:none;" onclick="loadTeacherReport()">Load 🔄</button></div>
+          <div id="treport" style="font-size:13px; color:#475569;">Tap Load to view student progress.</div>
+        </div>
+        <div class="card" style="background:#FFFBEB; border-color:#FDE68A;">
+          <h3 style="margin:0 0 10px;">🔑 Change Teacher PIN</h3>
+          <div class="fg"><input type="password" id="opin" class="inp" placeholder="Current PIN" maxlength="12" /></div>
+          <div class="ogrid" style="margin-bottom:10px;"><input type="password" id="npin" class="inp" placeholder="New PIN (min 4)" maxlength="12" /><input type="password" id="cpin" class="inp" placeholder="Confirm PIN" maxlength="12" /></div>
+          <button class="btn" id="cpbtn" style="width:100%; background:var(--o); color:#fff;" onclick="changePin()">Update PIN 🔐</button>
+          <div id="pmsg" style="margin-top:8px; font-weight:800; text-align:center; font-size:13px;"></div>
+        </div>
+        <div class="card"><h3 style="margin:0 0 10px;" id="alistt">📋 Questions</h3><div id="alist"></div></div>
+      </section>
+    </main>
+
+    <nav class="bnav hid" id="bnav">
+      <button class="nbtn on" data-s="home" onclick="go('home')"><span>🏠</span><span>Home</span></button>
+      <button class="nbtn" data-s="quizzes" onclick="go('quizzes')"><span>📝</span><span>Quizzes</span></button>
+      <button class="nbtn" data-s="games" onclick="go('games')"><span>🎮</span><span>Games</span></button>
+      <button class="nbtn" data-s="leaderboard" onclick="go('leaderboard')"><span>🏆</span><span>Leaderboard</span></button>
+      <button class="nbtn" data-s="profile" onclick="go('profile')"><span>👤</span><span>Profile</span></button>
+    </nav>
+  </div>
+
+  <div class="mod" id="wmod"><div class="mbox"><div class="trophy">🎉</div><h2 id="wtitle" style="margin:6px 0 4px; color:#6D28D9;">Welcome!</h2><p id="wmsg" style="font-size:14px; color:#475569; font-weight:700; margin:0 0 16px;"></p><button class="btn btn-p" onclick="$('wmod').classList.remove('on')">Let's Start Learning! 🚀</button></div></div>
+  <div class="mod" id="pmod"><div class="mbox"><div style="font-size:36px;">🔐</div><h3 style="margin:4px 0;">AK Learning Hub Teacher</h3><p style="font-size:13px; color:#64748B; margin:0 0 12px;">Enter secret Teacher PIN</p><input type="password" id="tpin" class="inp" style="text-align:center; font-size:20px; letter-spacing:4px;" maxlength="12" placeholder="••••" onkeydown="if(event.key==='Enter') checkTPin()" /><div id="perr" style="color:#DC2626; font-size:13px; font-weight:700; min-height:20px; margin-top:6px;"></div><div style="display:flex; gap:10px; margin-top:8px;"><button class="btn" style="flex:1; background:#E2E8F0; color:#1E293B; box-shadow:none;" onclick="closePMod()">Cancel</button><button class="btn" id="pbtn" style="flex:1; background:var(--p); color:#fff;" onclick="checkTPin()">Unlock</button></div></div></div>
+
+  <script>
+    window.onerror=function(m){var e=document.getElementById('sdot');if(e)e.textContent='⚠️ '+m;};
+    const SCRIPT_URL='https://script.google.com/macros/s/AKfycbxwdbgqZio3fhzMAHglDpCAKjI4bNQHh3zuNt4LtxPGqYX0-H5teRzG4aBsw3o1EvMX2Q/exec';
+    const K_S='ak_s_v3', K_C='ak_c_v3';
+    const SUB=[{k:'math',n:'Math',e:'➗'},{k:'english',n:'English',e:'🔤'},{k:'hindi',n:'Hindi',e:'🕉️'},{k:'evs',n:'EVS',e:'🌳'},{k:'gk',n:'GK',e:'🌍'},{k:'puzzle',n:'Puzzle',e:'🧩'}];
+    const AVS=['🦊','🦄','🦁','🐼','🐯','🐰','🐸','🦉'];
+    const BDG=[{i:'🌱',t:'First Step',r:0},{i:'🧠',t:'Smart Star',r:100},{i:'🚀',t:'Fast Kid',r:160},{i:'👑',t:'Champion',r:250},{i:'🔥',t:'Genius',r:320},{i:'💎',t:'Legend',r:400}];
+    const $=id=>document.getElementById(id), esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    let allQs=[],myAtt={},lb=[],curCat='math',sav='🦊',tPin='',wCnt=0,blkUntil=0,taps=0,tapT=null,lastSync=0;
+    const saved=(()=>{try{const p=JSON.parse(localStorage.getItem(K_S));return(p&&p.studentId)?p:null;}catch(e){return null;}})();
+    const st={id:saved?saved.studentId:'',name:saved?saved.name:'',cls:saved?saved.className:'Class 1',av:saved?saved.avatar:'🦊',stars:saved?(+saved.stars||0):0,q:{act:false,cat:null,topic:null,qs:[],i:0,sc:0,ok:0,tm:20,tid:null,lk:false}};
+
+    function saveCache(){try{localStorage.setItem(K_C,JSON.stringify({sid:st.id,allQs,lb,myAtt}));}catch(e){}}
+    function loadCache(){try{const c=JSON.parse(localStorage.getItem(K_C));if(c&&Array.isArray(c.allQs)){allQs=c.allQs;lb=c.lb||[];myAtt=(c.sid===st.id&&c.myAtt)?c.myAtt:{};}}catch(e){}}
+    function saveStu(){try{st.id?localStorage.setItem(K_S,JSON.stringify({studentId:st.id,name:st.name,className:st.cls,avatar:st.av,stars:st.stars})):localStorage.removeItem(K_S);}catch(e){}}
+    function tapLogo(){taps++;clearTimeout(tapT);tapT=setTimeout(()=>taps=0,2500);if(taps>=5){taps=0;clearTimeout(tapT);openPMod();}}
+    async function api(p){const r=await fetch(SCRIPT_URL+'?'+new URLSearchParams({...p,t:Date.now()}),{redirect:'follow'});return await r.json();}
+
+    async function syncSheet(chime=false){
+      $('sdot').textContent='🔄 Syncing...';
+      try{
+        const d=await api({action:'getAll',studentId:st.id||''});
+        if(d&&d.ok&&Array.isArray(d.questions)){
+          allQs=d.questions; lb=d.leaderboard||[]; lastSync=Date.now();
+          if(st.id&&d.myAttempts)myAtt=d.myAttempts;
+          if(st.id){const me=lb.find(x=>x.studentId===st.id);if(me){st.stars=me.stars;saveStu();}}
+          saveCache();
+          $('sdot').textContent='🟢 Live Google Sheet'; renderAll();
+          if($('sc-admin').classList.contains('on'))renderAdminQ();
+          if(chime)tone('ok');
+        }else $('sdot').textContent='🔴 Sheet Error';
+      }catch(e){$('sdot').textContent='🟠 Offline';}
+    }
+
+    function authMode(m){$('tlog').classList.toggle('on',m==='login');$('tsig').classList.toggle('on',m==='signup');$('flog').style.display=m==='login'?'block':'none';$('fsig').style.display=m==='signup'?'block':'none';$('lerr').textContent='';$('serr').textContent='';}
+    async function doLogin(){
+      const name=$('lname').value.trim(),className=$('lcls').value,pin=$('lpin').value.trim();
+      if(!name||!pin){$('lerr').textContent='नाम और PIN दोनों भरें!';return;}
+      $('lbtn').disabled=true;$('lbtn').textContent='Logging in... ⏳';$('lerr').textContent='';
+      try{const r=await api({action:'loginStudent',data:JSON.stringify({name,className,pin})});if(r&&r.ok&&r.student){myAtt=r.myAttempts||{};applyLogin(r.student,true);tone('ok');}else{$('lerr').textContent=(r&&r.error)||'Login failed!';tone('no');}}catch(e){$('lerr').textContent='Network error!';}
+      $('lbtn').disabled=false;$('lbtn').textContent='Login & Play 🎮';
+    }
+    async function doSignup(){
+      const name=$('sname').value.trim(),className=$('scls').value,pin=$('spin').value.trim();
+      if(!name||pin.length<4){$('serr').textContent='नाम और कम से कम 4 अंकों का PIN भरें!';return;}
+      $('sbtn').disabled=true;$('sbtn').textContent='Creating... ⏳';$('serr').textContent='';
+      try{const r=await api({action:'signupStudent',data:JSON.stringify({name,className,pin,avatar:sav})});if(r&&r.ok&&r.student){myAtt={};applyLogin(r.student,true);tone('ok');confetti();}else{$('serr').textContent=(r&&r.error)||'Signup failed!';tone('no');}}catch(e){$('serr').textContent='Network error!';}
+      $('sbtn').disabled=false;$('sbtn').textContent='Create Account 🚀';
+    }
+    function applyLogin(s,w){
+      st.id=s.studentId;st.name=s.name;st.cls=s.className;st.av=s.avatar||'🦊';st.stars=+s.stars||0;
+      saveStu();saveCache();showApp();renderAll();syncSheet(false);
+      if(w){$('wtitle').textContent=`नमस्ते ${st.name}! 🎉`;$('wmsg').textContent=`Welcome to AK Learning Hub (${st.cls})! आपके पास अभी ${st.stars} ⭐ Points हैं। नए सवाल खेलकर नंबर बढ़ाएं!`;$('wmod').classList.add('on');confetti();}
+    }
+    function showAuth(){$('auth').classList.add('on');$('appmain').style.display='none';$('bnav').classList.add('hid');$('hpills').style.display='none';}
+    function showApp(){$('auth').classList.remove('on');$('appmain').style.display='block';$('bnav').classList.remove('hid');$('hpills').style.display='flex';go('home');}
+    function doLogout(){if(!confirm('दूसरे बच्चे का अकाउंट खोलने के लिए Logout करें?'))return;st.id='';st.name='';st.stars=0;myAtt={};saveStu();saveCache();$('lpin').value='';showAuth();tone('tap');}
+
+    let ac=null;
+    function tone(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();const n=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);if(t==='ok'){o.type='triangle';o.frequency.setValueAtTime(523,n);o.frequency.setValueAtTime(659,n+.09);o.frequency.setValueAtTime(784,n+.18);g.gain.setValueAtTime(.15,n);g.gain.exponentialRampToValueAtTime(.001,n+.4);o.start(n);o.stop(n+.4);}else if(t==='no'){o.frequency.setValueAtTime(260,n);o.frequency.linearRampToValueAtTime(200,n+.2);g.gain.setValueAtTime(.13,n);g.gain.exponentialRampToValueAtTime(.001,n+.25);o.start(n);o.stop(n+.25);}else{o.frequency.setValueAtTime(480,n);g.gain.setValueAtTime(.07,n);g.gain.exponentialRampToValueAtTime(.001,n+.08);o.start(n);o.stop(n+.08);}}catch(e){}}
+    const lvl=s=>s>=250?{l:'👑 Champion',s:'Champion',n:null}:s>=100?{l:'⚡ Smart',s:'Smart',n:250}:{l:'🌱 Beginner',s:'Beginner',n:100};
+
+    function getTopics(cat){
+      const m={};
+      allQs.filter(q=>!cat||q.categoryId===cat).forEach(q=>{
+        const k=q.categoryId+'||'+q.topicId;
+        if(!m[k])m[k]={cat:q.categoryId,topic:q.topicId,total:0,done:0,pts:0,remQs:[]};
+        m[k].total++; const a=myAtt[q.questionId];
+        if(a){m[k].done++;m[k].pts+=Number(a.awardedPoints)||0;}else m[k].remQs.push(q);
+      });
+      return Object.values(m);
+    }
+
+    function renderAll(){
+      const l=lvl(st.stars);
+      $('hstars').textContent=st.stars;$('hlvl').textContent=l.l;
+      $('mgreet').textContent=`नमस्ते ${st.name||'Friend'}! आज क्या सीखेंगे?`;
+      $('mhint').textContent=l.n?`${st.cls} • ${l.s==='Beginner'?'Smart':'Champion'} is ${l.n-st.stars} ⭐ away!`:`${st.cls} • Champion! 👑`;
+      const totQ=allQs.length,doneQ=allQs.filter(q=>myAtt[q.questionId]).length,pct=totQ?Math.round((doneQ/totQ)*100):0;
+      $('glbl').textContent=`${doneQ} / ${totQ} Done (${pct}%)`;$('gfill').style.width=`${pct}%`;
+      ['hgrid','qgrid'].forEach(id=>{
+        $(id).innerHTML=SUB.map(s=>{
+          const qs=allQs.filter(q=>q.categoryId===s.k),rem=qs.filter(q=>!myAtt[q.questionId]).length;
+          return `<button class="scard" onclick="openCat('${s.k}')"><span style="font-size:38px;display:block;margin-bottom:4px;">${s.e}</span><span style="font-size:17px;font-weight:800;display:block;">${s.n}</span><span style="font-size:11.5px;background:${rem===0&&qs.length?'rgba(16,185,129,.85)':'rgba(255,255,255,.24)'};padding:2px 10px;border-radius:999px;display:inline-block;margin-top:5px;">${qs.length===0?'0 Qs':rem===0?'🏆 Completed':rem+' New Left'}</span></button>`;
+        }).join('');
+      });
+      const topics=getTopics(null);
+      $('tdash').innerHTML=topics.length?topics.map(t=>{
+        const sb=SUB.find(x=>x.k===t.cat)||{e:'📚',n:t.cat},tp=t.total?Math.round((t.done/t.total)*100):0,isD=t.done===t.total&&t.total>0;
+        return `<div class="tcard ${isD?'done':''}"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-weight:800;font-size:15px;">${sb.e} ${esc(sb.n)} → ${esc(t.topic)}</span><span style="font-size:12px;font-weight:800;color:${isD?'#059669':'#6366F1'};">${isD?'🏆 Badge Earned':tp+'%'}</span></div><div class="track"><div class="fill" style="width:${tp}%"></div></div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#64748B;margin-top:6px;"><span>Done: ${t.done}/${t.total} (Left: ${t.remQs.length})</span><span>⭐ ${t.pts} pts</span></div></div>`;
+      }).join(''):'<div class="card" style="text-align:center;color:#64748B;">Loading questions...</div>';
+      $('pav').textContent=st.av;$('pname').textContent=st.name||'Student';$('pcls').textContent=`🎓 ${st.cls}`;$('plvl').textContent=l.l;
+      $('pavpick').innerHTML=AVS.map(a=>`<button class="avbtn dk ${a===st.av?'on':''}" onclick="pickAv('${a}')">${a}</button>`).join('');
+      $('bgrid').innerHTML=BDG.map(b=>`<div class="btile ${st.stars>=b.r?'un':'lk'}"><div style="font-size:30px;">${b.i}</div><div style="font-weight:800;font-size:12.5px;">${b.t}</div><div style="font-size:11px;color:#64748B;">${st.stars>=b.r?'Unlocked!':b.r+' ⭐'}</div></div>`).join('');
+      renderLB();
+      if($('qtopics').style.display==='block')renderTopics();
+    }
+
+    async function pickAv(a){st.av=a;saveStu();saveCache();tone('tap');renderAll();try{await api({action:'updateAvatar',studentId:st.id,avatar:a});}catch(e){}}
+    function openCat(k){curCat=k;go('quizzes');$('qcat').style.display='none';$('qact').style.display='none';$('qsum').style.display='none';$('qtopics').style.display='block';const sb=SUB.find(x=>x.k===k)||{e:'📚',n:k};$('ctitle').textContent=`${sb.e} ${sb.n} Topics`;renderTopics();}
+    function backToCats(){$('qtopics').style.display='none';$('qcat').style.display='block';}
+
+    function renderTopics(){
+      const list=getTopics(curCat);
+      if(!list.length){$('tlist').innerHTML='<div class="card" style="text-align:center;color:#64748B;">इस विषय में अभी कोई सवाल नहीं है!</div>';return;}
+      $('tlist').innerHTML=list.map(t=>{
+        const rem=t.remQs.length,pct=t.total?Math.round((t.done/t.total)*100):0,done=rem===0;
+        return `<div class="tcard ${done?'done':''}"><div style="display:flex;justify-content:space-between;align-items:center;"><h3 style="margin:0;font-size:18px;">📌 ${esc(t.topic)}</h3><span style="font-weight:800;font-size:13px;color:${done?'#059669':'#4F46E5'};">${pct}%</span></div><div class="tstats"><div class="tstat"><b>${t.total}</b>Total</div><div class="tstat"><b>${t.done}</b>Done</div><div class="tstat"><b>${rem}</b>Left</div><div class="tstat"><b>${t.pts}⭐</b>Earned</div></div><div class="track" style="margin-bottom:12px;"><div class="fill" style="width:${pct}%"></div></div>${done?`<div style="text-align:center;padding:8px 4px;"><div class="trophy">🏆</div><div style="font-weight:800;color:#065F46;font-size:14px;">Congratulations! You have completed all available questions in this topic.</div><button class="btn" style="width:100%;margin-top:10px;background:#CBD5E1;color:#475569;" disabled>✅ All Questions Completed</button></div>`:`<button class="btn btn-p" onclick="startTopic('${esc(t.topic)}')">Play ${rem} New Question${rem>1?'s':''} 🚀</button>`}</div>`;
+      }).join('');
+    }
+
+    function startTopic(tn){
+      const t=getTopics(curCat).find(x=>x.topic===tn);if(!t||!t.remQs.length){renderTopics();return;}
+      st.q={act:true,cat:curCat,topic:tn,qs:[...t.remQs],i:0,sc:0,ok:0,tm:20,tid:null,lk:false};
+      $('qtopics').style.display='none';$('qact').style.display='block';$('bnav').classList.add('hid');
+      const sb=SUB.find(x=>x.k===curCat)||{e:'📚'};$('qsubj').textContent=`${sb.e} ${tn}`;loadQ();
+    }
+    function loadQ(){
+      const q=st.q.qs[st.q.i],tot=st.q.qs.length;st.q.lk=false;st.q.tm=20;
+      $('qcnt').textContent=`Question ${st.q.i+1} of ${tot}`;$('qearn').textContent=`+${st.q.sc} ⭐`;
+      $('qpfill').style.width=`${((st.q.i+1)/tot)*100}%`;$('qtxt').textContent=q.q;$('qfb').className='fb';$('qfb').textContent='';
+      const L=['A','B','C','D'];
+      $('olist').innerHTML=q.opts.map((o,i)=>`<button class="opt" onclick="ansQ(${i})"><span class="oltr">${L[i]}</span><span>${esc(o)}</span></button>`).join('');
+      clearInterval(st.q.tid);
+      const u=()=>{$('qtmr').textContent=`⏱️ ${st.q.tm}s`;$('qtmr').classList.toggle('urg',st.q.tm<=5);};
+      u();st.q.tid=setInterval(()=>{st.q.tm--;u();if(st.q.tm<=0){clearInterval(st.q.tid);ansQ(-1);}},1000);
+    }
+    async function ansQ(idx){
+      if(st.q.lk)return;st.q.lk=true;clearInterval(st.q.tid);
+      const q=st.q.qs[st.q.i],bs=document.querySelectorAll('#olist .opt');bs.forEach(b=>b.disabled=true);
+      $('qfb').className='fb';$('qfb').style.display='block';$('qfb').textContent='Checking... ⏳';
+      try{
+        const res=await api({action:'submitAttempt',studentId:st.id,questionId:q.questionId,selectedIndex:idx});
+        if(res&&res.ok){
+          myAtt[q.questionId]=res.attempt||{awardedPoints:0};st.stars=Number(res.totalStars)||st.stars;saveStu();saveCache();
+          if(res.duplicate){$('qfb').className='fb no';$('qfb').textContent='यह सवाल पहले ही हो चुका है! (0 Points)';tone('no');}
+          else if(res.isCorrect){
+            if(idx>=0)bs[idx].classList.add('ok');$('qfb').className='fb ok';$('qfb').textContent=`शाबाश! 🎉 +${res.awardedPoints} Points!`;
+            st.q.sc+=res.awardedPoints;st.q.ok++;$('qearn').textContent=`+${st.q.sc} ⭐`;
+            const pill=$('hspill');pill.classList.remove('bump');void pill.offsetWidth;pill.classList.add('bump');setTimeout(()=>pill.classList.remove('bump'),350);
+            const fl=document.createElement('div');fl.className='flt';fl.textContent=`+${res.awardedPoints} ⭐`;document.body.appendChild(fl);setTimeout(()=>fl.remove(),1000);
+            tone('ok');confetti();
+          }else{
+            if(idx>=0)bs[idx].classList.add('no');if(bs[res.correctIndex])bs[res.correctIndex].classList.add('ok');
+            $('qfb').className='fb no';$('qfb').textContent=`कोई बात नहीं, फिर कोशिश करो 💪 (${q.opts[res.correctIndex]})`;tone('no');
+          }
+          renderAll();
+        }else{$('qfb').className='fb no';$('qfb').textContent=(res&&res.error)||'Error saving!';}
+      }catch(e){$('qfb').className='fb no';$('qfb').textContent='Network error!';}
+      setTimeout(()=>{
+        st.q.i++;if(st.q.i<st.q.qs.length)loadQ();
+        else{st.q.act=false;$('qact').style.display='none';$('qsum').style.display='block';$('bnav').classList.remove('hid');$('ssub').textContent=`${st.q.ok} / ${st.q.qs.length} Correct in ${st.q.topic}!`;$('sstars').textContent=`+${st.q.sc} Points Earned`;confetti();}
+      },950);
+    }
+    function exitQ(sil=false){clearInterval(st.q.tid);st.q.act=false;$('qact').style.display='none';$('qsum').style.display='none';$('qcat').style.display='none';$('qtopics').style.display='block';if(st.id)$('bnav').classList.remove('hid');renderTopics();if(!sil)tone('tap');}
+    function go(s){if(st.q.act){clearInterval(st.q.tid);st.q.act=false;}if(s!=='admin')tPin='';if(s==='admin'&&!tPin){openPMod();return;}tone('tap');document.querySelectorAll('.scr').forEach(x=>x.classList.remove('on'));$('sc-'+s).classList.add('on');document.querySelectorAll('.nbtn').forEach(b=>b.classList.toggle('on',b.dataset.s===s));if(s==='quizzes'){$('qact').style.display='none';$('qsum').style.display='none';$('qtopics').style.display='none';$('qcat').style.display='block';}if(s==='leaderboard'&&Date.now()-lastSync>15000)syncSheet(false);if(s==='admin'){$('auth').classList.remove('on');$('appmain').style.display='block';$('bnav').classList.add('hid');renderAdminQ();}else if(st.id)$('bnav').classList.remove('hid');}
+
+    function openPMod(){$('tpin').value='';$('perr').textContent='';$('pmod').classList.add('on');setTimeout(()=>$('tpin').focus(),100);}
+    function closePMod(){$('pmod').classList.remove('on');}
+    async function checkTPin(){if(Date.now()<blkUntil){$('perr').textContent='Wait 30s!';return;}const p=$('tpin').value.trim();if(!p){$('perr').textContent='Enter PIN';return;}$('pbtn').disabled=true;$('pbtn').textContent='Checking...';try{const r=await api({action:'verifyPin',pin:p});if(r&&r.ok){wCnt=0;tPin=p;closePMod();tone('ok');go('admin');}else{wCnt++;tone('no');if(wCnt>=5){blkUntil=Date.now()+30000;wCnt=0;$('perr').textContent='Locked 30s!';}else $('perr').textContent='Wrong PIN!';}}catch(e){$('perr').textContent='Network error!';}$('pbtn').disabled=false;$('pbtn').textContent='Unlock';}
+    function lockAdmin(){tPin='';['opin','npin','cpin'].forEach(i=>$(i).value='');$('pmsg').textContent='';st.id?showApp():showAuth();}
+    async function changePin(){const o=$('opin').value.trim(),n=$('npin').value.trim(),c=$('cpin').value.trim();if(!o||n.length<4||n!==c){$('pmsg').style.color='#DC2626';$('pmsg').textContent='4+ अंकों का सही PIN भरें!';return;}$('cpbtn').disabled=true;try{const r=await api({action:'changePin',oldPin:o,newPin:n});if(r&&r.ok){tPin=n;$('pmsg').style.color='#059669';$('pmsg').textContent='PIN Changed! ✅';['opin','npin','cpin'].forEach(i=>$(i).value='');tone('ok');}else{$('pmsg').style.color='#DC2626';$('pmsg').textContent=(r&&r.error)||'Error!';tone('no');}}catch(e){$('pmsg').textContent='Network error!';}$('cpbtn').disabled=false;}
+    async function addQ(){const subject=$('asubj').value,topic=$('atopic').value.trim()||'General',q=$('aqtxt').value.trim(),opts=[0,1,2,3].map(i=>$('ao'+i).value.trim()),ans=+$('acorr').value,points=+$('apts').value||10;if(!q||opts.some(x=>!x)){$('amsg').style.color='#DC2626';$('amsg').textContent='सवाल और चारों ऑप्शन भरें!';return;}$('asave').disabled=true;$('asave').textContent='Saving... ⏳';try{const r=await api({action:'addQuestion',pin:tPin,data:JSON.stringify({subject,topic,q,opts,ans,points})});if(r&&r.ok){await syncSheet(false);$('amsg').style.color='#059669';$('amsg').textContent='Saved! ✅ New question unlocked!';$('aqtxt').value='';[0,1,2,3].forEach(i=>$('ao'+i).value='');tone('ok');}else throw new Error((r&&r.error)||'Error');}catch(e){$('amsg').style.color='#DC2626';$('amsg').textContent=e.message;tone('no');}$('asave').disabled=false;$('asave').textContent='Save Question ✅';}
+    async function delQ(qid){try{const r=await api({action:'deleteQuestion',pin:tPin,questionId:qid});if(r&&r.ok)await syncSheet(false);}catch(e){}tone('tap');}
+    function renderAdminQ(){const k=$('asubj').value,sb=SUB.find(x=>x.k===k),l=allQs.filter(q=>q.categoryId===k);$('alistt').textContent=`📋 ${sb.n} (${l.length})`;$('alist').innerHTML=l.length?l.map((x,i)=>`<div class="aq"><div><div style="font-size:11px;color:#6366F1;font-weight:800;">${esc(x.topicId)} • ${x.points} pts • ${x.questionId}</div><div style="font-weight:800;">${i+1}. ${esc(x.q)}</div></div><button class="del" onclick="delQ('${x.questionId}')">🗑️</button></div>`).join(''):'<p style="text-align:center;color:#64748B;">No questions</p>';}
+    async function loadTeacherReport(){$('treport').textContent='Loading... ⏳';try{const r=await api({action:'teacherReport',pin:tPin});if(r&&r.ok&&r.students){const tot=allQs.length;$('treport').innerHTML=r.students.length?r.students.map(s=>{const done=Object.keys(s.attempts||{}).length,rem=Math.max(0,tot-done);return`<div class="aq" style="display:block;"><div style="display:flex;justify-content:space-between;font-weight:800;"><span>${s.avatar} ${esc(s.name)} (${esc(s.className)})</span><span style="color:#B45309;">${s.stars} ⭐</span></div><div style="font-size:12px;margin-top:3px;">Attempted: <b>${done}</b> / ${tot} • Remaining: <b>${rem}</b></div></div>`;}).join(''):'No students yet.';}else $('treport').textContent='Error loading report.';}catch(e){$('treport').textContent='Network error!';}}
+
+    let mc=[],mf=[],ml=false,mm=0;
+    function initMem(){mc=['🦁','🚀','🌈','🍎','🦋','⚽','🦁','🚀','🌈','🍎','🦋','⚽'].sort(()=>Math.random()-.5).map((e,i)=>({i,e,f:0,m:0}));mf=[];ml=false;mm=0;$('mstat').textContent='';rMem();}
+    function rMem(){$('mgrid').innerHTML=mc.map(c=>`<button class="mtile ${c.f?'fl':''} ${c.m?'mt':''}" onclick="fMem(${c.i})">${c.f||c.m?c.e:'❓'}</button>`).join('');}
+    function fMem(i){const c=mc[i];if(ml||c.f||c.m)return;tone('tap');c.f=1;mf.push(c);rMem();if(mf.length===2){ml=true;const[a,b]=mf;if(a.e===b.e){a.m=b.m=1;mm+=2;mf=[];ml=false;tone('ok');rMem();if(mm===mc.length){$('mstat').textContent='शाबाश! Great Practice! 🎉';confetti();}}else setTimeout(()=>{a.f=b.f=0;mf=[];ml=false;rMem();},650);}}
+    let mma=12;
+    function nextMM(){const a=2+Math.floor(Math.random()*12),b=2+Math.floor(Math.random()*12);mma=a+b;$('mmq').textContent=`${a} + ${b} = ?`;const s=new Set([mma]);while(s.size<3)s.add(mma+Math.floor(Math.random()*7)-3);$('mmopts').innerHTML=[...s].sort(()=>Math.random()-.5).map(v=>`<button class="btn" style="background:#fff;border:2px solid #FB923C;color:#EA580C;" onclick="if(${v}===mma){tone('ok');$('mmstat').textContent='Correct! Practice ✅';nextMM();}else{tone('no');$('mmstat').textContent='Try again! 💪';}">${v}</button>`).join('');}
+
+    function renderLB(){
+      const cat=$('lbcat').value,clsF=$('lbf').value;
+      let l=lb.map(x=>({...x,pts:cat==='ALL'?(Number(x.stars)||0):((x.catPoints&&x.catPoints[cat])||0)}));
+      if(clsF==='MY'&&st.cls)l=l.filter(x=>x.className===st.cls);
+      l.sort((a,b)=>b.pts-a.pts);
+      if(l.length>=3){const p=[{x:l[1],c:'s',m:'🥈'},{x:l[0],c:'f',m:'🥇'},{x:l[2],c:'t',m:'🥉'}];$('pod').innerHTML=p.map(z=>`<div class="pitem ${z.c}"><div class="pav">${z.x.avatar}</div><div style="font-weight:800;font-size:13px;">${esc(z.x.name)}</div><div style="font-size:11px;color:#6366F1;font-weight:700;">${esc(z.x.className||'')}</div><div style="font-size:12px;color:#64748B;margin-bottom:6px;">${z.x.pts} ⭐</div><div class="pblk">${z.m}</div></div>`).join('');}else $('pod').innerHTML='';
+      const si=l.length>=3?3:0;
+      $('rlist').innerHTML=l.slice(si).map((p,i)=>`<div class="rrow ${p.studentId===st.id?'me':''}"><div style="width:28px;font-weight:800;text-align:center;">#${si+i+1}</div><div style="font-size:22px;">${p.avatar}</div><div style="flex:1;"><div style="font-weight:800;">${esc(p.name)} ${p.studentId===st.id?'(You)':''}</div><div style="font-size:12px;color:#6366F1;font-weight:700;">${esc(p.className||'')} • ${lvl(p.stars).s}</div></div><div class="pill" style="background:#FEF3C7;color:#B45309;">${p.pts} ⭐</div></div>`).join('');
+    }
+
+    const cv=$('confetti'),cx=cv.getContext('2d');let pts=[],run=false;
+    const rsz=()=>{cv.width=innerWidth;cv.height=innerHeight;};addEventListener('resize',rsz);rsz();
+    function confetti(){const c=['#7C3AED','#38BDF8','#10B981','#F59E0B','#EC4899'];for(let i=0;i<60;i++)pts.push({x:innerWidth/2+(Math.random()-.5)*120,y:innerHeight*.45,vx:(Math.random()-.5)*12,vy:(Math.random()-1.2)*13,s:5+Math.random()*7,c:c[i%5],l:1});if(!run){run=true;anim();}}
+    function anim(){cx.clearRect(0,0,cv.width,cv.height);pts=pts.filter(p=>p.l>0);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.l-=.016;cx.globalAlpha=Math.max(0,p.l);cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.s,p.s*.7);});if(pts.length)requestAnimationFrame(anim);else run=false;}
+
+    (function rSav(){$('sav').innerHTML=AVS.map(a=>`<button type="button" class="avbtn ${a===sav?'on':''}" onclick="sav='${a}';document.querySelectorAll('#sav .avbtn').forEach(b=>b.classList.toggle('on',b.textContent==='${a}'))">${a}</button>`).join('');})();
+    initMem();nextMM();
+    if(st.id){loadCache();showApp();renderAll();}else showAuth();
+    syncSheet(false);
+    if(new URLSearchParams(location.search).get('teacher')==='1')openPMod();
+  </script>
+</body>
+</html>
